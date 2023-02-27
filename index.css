@@ -1,0 +1,122 @@
+/*全局变量*/
+body{
+    background-color: white;
+    font-family: kaiti;
+    font-size: 16px;
+    color: #c1de08;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+/*关闭连接的颜色*/
+a:link {
+    color: #c1de08;
+    text-decoration:none;}
+/*视频背景*/
+.video-bg{
+    background-color: white;
+    min-width: 100%;
+    min-height: 100%;
+    position: fixed;
+    -o-object-fit: cover;
+    object-fit: cover;
+    background-position: unset;
+    z-index: -9999;
+    top: 0;
+    left: 0px;
+    background-repeat: no-repeat;
+    overflow: auto;
+    overflow-x: hidden;
+}
+/*瓶子的跋涉标题*/
+h1 {
+    text-align: center;
+    font-size: 5em;
+}
+/*一言*/
+#hitokoto_text
+{
+    color: whitesmoke;
+    font-size: 2.3rem;
+}
+#hitokoto_author
+{
+    color: white;
+}
+
+
+/*声音开关窗口*/
+#reimg
+{
+    position: fixed;
+    top: 10px;
+    right: 30px;
+    height: 30px;
+}
+
+
+/*画廊CSS*/
+.photo_center
+{
+    text-align: center;
+}
+div.img {
+    margin: 20px;
+    /*border: 1px solid #ccc;*/
+    float: left;
+    width: 180px;
+}
+/*画廊大图*/
+/*.img_large*/
+/*{*/
+/*    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);*/
+/*    margin-bottom: 25px;*/
+/*    width: 47%;*/
+/*    background-color: white;*/
+/*    opacity: 50%;*/
+/*}*/
+div.img:hover {
+    /*border: 1px solid #777;*/
+}
+
+div.img img {
+    width: 100%;
+    height: auto;
+    opacity: 50%
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+}
+.photo_center {
+  margin: auto;
+  width: 50%; /* 假设div元素宽度为父元素的一半 */
+}
+
+
+/*尾部*/
+#footer{
+    position: fixed;
+    top: 93%;
+    right: 3%;
+    font-size: 25px;
+}
+.footer_GitHub
+{
+    /*position: fixed;*/
+    top: 93%;
+    right: 12%;
+    font-size: 25px;
+    width: 50px;
+}
+span
+{
+    bottom: 10px;
+    position: relative;
+}
+#one_ord
+{
+    text-align: center;
+    font-size: larger;
+}
