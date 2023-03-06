@@ -11,12 +11,12 @@
 
 * 如何将视频右键出现“控件组件”，视频另存为，视频下载等情况。即在网页取消鼠标右键的功能：
 
-将视频放在div下，即才可以取消下面的播放操作。 
+* 将视频放在div下，即才可以取消下面的播放操作。 
 ```HTML
  <div>
     <video muted data-autoplay loop="loop" src="" autoplay="autoplay" class="video-bg" id="sound" controlsList="nodownload" oncontextmenu="return false;">你的浏览器不支持视频</video>
  </div>
- ```
+```
  * autoplay为自动播放。
  * controlslist="nodownload"  取消下载播放的视频下载操作
  * oncontextmenu="return false"  此操作为取消页面的右键操作
@@ -25,3 +25,5 @@
 ```HTML
  <meta name="referrer" content="never">
 ```
+
+
