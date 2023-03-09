@@ -22,12 +22,12 @@ window.onload=function (){
 function reimg(){
     var img=document.getElementById("reimg");
     var sound=document.getElementById("sound")
-    if(img.src==='http://r.photo.store.qq.com/psc?/V51tNpWb2FonU036uaZ52J0vZx28zxke/45NBuzDIW489QBoVep5mcX0eG2aaojrZXyq77oKW9X6BoY8V40gy.btWam5VStmsX8h5ETd0tGgz4JW*dgmZCEba22aKdNxhT66C8IQFQWY!/r'){
-        img.src='http://r.photo.store.qq.com/psc?/V51tNpWb2FonU036uaZ52J0vZx28zxke/45NBuzDIW489QBoVep5mcfqB8IAqMovLnQG0tA4GEMFaeh6RjvBlnGtNyMKFADtyrNX.W09dAOteEBh1ZhCM0Qk2Z9ORgtKPeNpcesZPwls!/r';
+    if(img.src==='https://i.imgtg.com/2023/03/09/YQCwa.png'){
+        img.src='https://i.imgtg.com/2023/03/09/YQ3SK.png';
         sound.muted=true;
     }
     else{
-        img.src='http://r.photo.store.qq.com/psc?/V51tNpWb2FonU036uaZ52J0vZx28zxke/45NBuzDIW489QBoVep5mcX0eG2aaojrZXyq77oKW9X6BoY8V40gy.btWam5VStmsX8h5ETd0tGgz4JW*dgmZCEba22aKdNxhT66C8IQFQWY!/r';
+        img.src='https://i.imgtg.com/2023/03/09/YQCwa.png';
         sound.muted=false;
     }
 }
