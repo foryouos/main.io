@@ -83,7 +83,7 @@ div.img:hover {
 div.img img {
     width: 100%;
     height: auto;
-    opacity: 80%;
+    opacity: 60%;
     border-radius: 100px;
 }
 
