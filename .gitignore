@@ -1,0 +1,12 @@
+# 编辑器
+.idea/
+.vs/
+.vscode/
+
+# 系统
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 工具工作目录（含本地路径与工作笔记，不随站点发布）
+.workbuddy/

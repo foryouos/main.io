@@ -1,0 +1,37 @@
+# 瓶子的跋涉 · foryouos — https://www.foryouos.cn/
+
+User-agent: *
+Allow: /
+
+# 主要搜索引擎：显式放行，便于各站长平台校验抓取状态
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Baiduspider-image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: MSNBot
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+User-agent: YisouSpider
+Allow: /
+
+# 说明：/?theme=night 等带参地址与首页内容一致，
+# 已通过 <link rel="canonical"> 指向首页，无需在此屏蔽。
+
+Sitemap: https://www.foryouos.cn/sitemap.xml

@@ -1,124 +1,833 @@
-/*全局变量*/
-body{
-    background-color: white;
-    font-family: kaiti;
-    font-size: 16px;
-    color: #c1de08;
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
-}
-/*关闭连接的颜色*/
-a:link {
-    color: #c1de08;
-    text-decoration:none;}
-/*视频背景*/
-.video-bg{
-    background-color: white;
-    min-width: 100%;
-    min-height: 100%;
-    position: fixed;
-    -o-object-fit: cover;
-    object-fit: cover;
-    background-position: unset;
-    z-index: -9999;
-    top: 0;
-    left: 0px;
-    background-repeat: no-repeat;
-    overflow: auto;
-    overflow-x: hidden;
-}
-/*瓶子的跋涉标题*/
-h1 {
-    text-align: center;
-    font-size: 5em;
-}
-/*一言*/
-#hitokoto_text
-{
-    color: whitesmoke;
-    font-size: 2.3rem;
-}
-#hitokoto_author
-{
-    color: white;
+/* ==========================================================================
+   瓶子的跋涉 · foryouos   —   index.css
+   纯 HTML + CSS + JS，无外部依赖，单屏不滚动
+   ========================================================================== */
+
+/* ---------- 主题变量 ---------- */
+:root {
+  --font: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei UI", "Microsoft YaHei",
+          "Source Han Sans SC", "Hiragino Sans GB", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* 昼夜通用 */
+  --ink:        #4A3520;
+  --hero:       #FFFDF4;
+  --fallback:   #FFD22E;
+
+  /* 日间配色 */
+  --hero-shadow:  rgba(150, 88, 0, .34);
+  --ui-text:      #4A3520;
+  --ui-muted:     #8A7048;
+  --pill-bg:      rgba(255, 253, 246, .62);
+  --pill-border:  rgba(74, 53, 32, .12);
+  --orb-bg:       #FFFDF6;
+  --orb-fg:       #F07C1E;
+  --orb-shadow:   0 8px 20px rgba(150, 92, 8, .22), inset 0 -3px 0 rgba(74, 53, 32, .06);
+  --ray:          rgba(255, 190, 60, .82);
+  --cloud:        #FFFDF4;
+  --cloud-op:     .92;
+  --bird:         #6B4E2C;
+  --hill-1:       #E8683C;
+  --hill-2:       #D5532F;
+  --hill-3:       #DE5C34;
+  --lamp:         #FFF6E4;
+  --wave-1:       #0E6E90;
+  --wave-2:       #1B84A8;
+  --wave-3:       #2FA3C2;
+  --foam:         #FFF3DC;
+  --lh-rock:      #4A7382;
+  --shadow:       0 12px 30px rgba(140, 88, 8, .18);
+  --slide:        0;
 }
 
+html[data-theme="night"] {
+  --hero:         #FFFBF0;
+  --fallback:     #0D2543;
 
-/*声音开关窗口*/
-#reimg
-{
-    position: fixed;
-    top: 10px;
-    right: 30px;
-    height: 30px;
-}
-
-
-/*画廊CSS*/
-.photo_center
-{
-    text-align: center;
-}
-div.img {
-    margin: 20px;
-    /*border: 1px solid #ccc;*/
-    float: left;
-    width: 180px;
-
-}
-/*画廊大图*/
-/*.img_large*/
-/*{*/
-/*    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);*/
-/*    margin-bottom: 25px;*/
-/*    width: 47%;*/
-/*    background-color: white;*/
-/*    opacity: 50%;*/
-/*}*/
-div.img:hover {
-    /*border: 1px solid #777;*/
+  --hero-shadow:  rgba(0, 0, 0, .45);
+  --ui-text:      #F2EADA;
+  --ui-muted:     #9FB6CA;
+  --pill-bg:      rgba(10, 28, 46, .48);
+  --pill-border:  rgba(255, 255, 255, .16);
+  --orb-bg:       rgba(255, 252, 244, .12);
+  --orb-fg:       #FFE6A8;
+  --orb-shadow:   0 8px 22px rgba(0, 0, 0, .38), inset 0 0 0 1px rgba(255, 255, 255, .12);
+  --ray:          rgba(255, 240, 200, .2);
+  --cloud:        #A9C6DE;
+  --cloud-op:     .18;
+  --bird:         #CFE3F2;
+  --hill-1:       #123248;
+  --hill-2:       #0D2739;
+  --hill-3:       #102C40;
+  --lamp:         #DCEBF6;
+  --wave-1:       #072A3E;
+  --wave-2:       #0C3A52;
+  --wave-3:       #14526E;
+  --foam:         #BFE0EE;
+  --lh-rock:      #0B2A3B;
+  --shadow:       0 14px 34px rgba(0, 0, 0, .42);
 }
 
-div.img img {
-    width: 100%;
-    height: auto;
-    opacity: 60%;
-    border-radius: 100px;
+/* ---------- 基础 ---------- */
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
-div.desc {
-    padding: 15px;
-    text-align: center;
-}
-.photo_center {
-  margin: auto;
-  width: 50%; /* 假设div元素宽度为父元素的一半 */
+body {
+  background: var(--fallback);
+  font-family: var(--font);
+  color: var(--ui-text);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 1.1s ease, color .6s ease;
 }
 
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
 
-/*尾部*/
-#footer{
-    position: fixed;
-    top: 93%;
-    right: 3%;
-    font-size: 25px;
+/* ==========================================================================
+   1. 背景场景
+   ========================================================================== */
+.scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--fallback);
+  transition: background-color 1.1s ease;
 }
-.footer_GitHub
-{
-    /*position: fixed;*/
-    top: 93%;
-    right: 12%;
-    font-size: 25px;
-    width: 50px;
+
+.scene-svg { display: block; width: 100%; height: 100%; }
+
+/* 视差层（--px / --py 由 JS 更新，取值 -1 ~ 1） */
+.lyr {
+  transition: transform 1.1s cubic-bezier(.22, .8, .28, 1);
+  will-change: transform;
 }
-span
-{
-    bottom: 10px;
-    position: relative;
+.lyr-far { transform: translate3d(calc(var(--px, 0) * 13px), calc(var(--py, 0) * 9px), 0); }
+.lyr-mid { transform: translate3d(calc(var(--px, 0) * 22px), calc(var(--py, 0) * 13px), 0); }
+.lyr-sea { transform: translate3d(calc(var(--px, 0) * 32px), calc(var(--py, 0) * 17px), 0); }
+
+/* --- 天空昼夜交替 --- */
+.sky { transition: opacity 1.2s ease; }
+html[data-theme="day"]   .sky-night { opacity: 0; }
+html[data-theme="night"] .sky-day   { opacity: 0; }
+
+/* --- 星星 --- */
+.stars { opacity: 0; transition: opacity 1.4s ease; }
+html[data-theme="night"] .stars { opacity: 1; }
+
+.star { fill: #FFFDF0; animation: twinkle 3.6s ease-in-out infinite; }
+.star:nth-child(4n+1) { animation-delay: -.3s; }
+.star:nth-child(4n+2) { animation-delay: -1.2s; }
+.star:nth-child(4n+3) { animation-delay: -2.1s; }
+.star:nth-child(4n+4) { animation-delay: -2.9s; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: .28; }
+  45%      { opacity: 1; }
 }
-#one_ord
-{
-    text-align: center;
-    font-size: larger;
+
+/* --- 流星 --- */
+.comet {
+  transform: translate(1180px, 90px) rotate(-28deg);
+  opacity: 0;
+  animation: shoot 17s linear infinite;
+}
+@keyframes shoot {
+  0%, 86%   { opacity: 0; transform: translate(1180px, 90px) rotate(-28deg); }
+  88%       { opacity: 1; }
+  93%       { opacity: 1; transform: translate(1010px, 165px) rotate(-28deg); }
+  97%, 100% { opacity: 0; transform: translate(940px, 196px) rotate(-28deg); }
+}
+
+/* --- 月亮 --- */
+.moon { opacity: 0; transition: opacity 1.4s ease; }
+html[data-theme="night"] .moon { opacity: 1; }
+.moon-glow { animation: moon-pulse 7s ease-in-out infinite; }
+.moon-bob  { animation: float-y 8.5s ease-in-out infinite; }
+
+@keyframes moon-pulse {
+  0%, 100% { opacity: .78; }
+  50%      { opacity: 1; }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(-7px); }
+  50%      { transform: translateY(7px); }
+}
+
+/* --- 微笑的星星 --- */
+.smile-star-pulse {
+  animation: star-pulse 3.4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+@keyframes star-pulse {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50%      { transform: scale(1.12) rotate(9deg); }
+}
+
+/* --- 太阳 --- */
+.sun-wrap { opacity: 1; transition: opacity 1.4s ease; }
+html[data-theme="night"] .sun-wrap { opacity: .16; }
+
+.sun-glow { animation: sun-pulse 9s ease-in-out infinite; }
+@keyframes sun-pulse {
+  0%, 100% { opacity: .72; }
+  50%      { opacity: 1; }
+}
+
+.sun-rays {
+  fill: var(--ray);
+  transition: fill 1.2s ease;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: spin 96s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* --- 云：外层漂移（--cx 为起始横坐标，负值确保从画面外进入） --- */
+.cloud { fill: var(--cloud); opacity: var(--cloud-op); transition: fill 1.2s ease, opacity 1.2s ease; }
+
+.cloud-drift { --cx: -900px; animation: drift 132s linear infinite; animation-delay: -45s; }
+.cd2 { --cx: -1600px; animation-duration: 168s; animation-delay: -126s; }
+.cd3 { --cx: -2300px; animation-duration: 108s; animation-delay: -93s; }
+.cd4 { --cx: -2900px; animation-duration: 150s; animation-delay: -33s; }
+
+@keyframes drift {
+  0%   { transform: translate(var(--cx), 6px); }
+  50%  { transform: translate(calc(var(--cx) + 1600px), -14px); }
+  100% { transform: translate(calc(var(--cx) + 3200px), 6px); }
+}
+
+/* --- 海鸟 --- */
+.bird path { stroke: var(--bird); transition: stroke 1.2s ease; }
+.bird {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flap 1.15s ease-in-out infinite;
+}
+.b2 { animation-duration: 1.32s; animation-delay: -.4s; }
+.b3 { animation-duration: 1.05s; animation-delay: -.8s; }
+@keyframes flap {
+  0%, 100% { transform: scaleY(1); }
+  50%      { transform: scaleY(.42); }
+}
+
+/* 每只鸟用 --by 指定飞行高度，避免共用同一条轨迹 */
+.bf1 { --by: 250px; animation: bird-cross 74s linear infinite; animation-delay: -12s; }
+.bf2 { --by: 186px; animation: bird-cross 96s linear infinite; animation-delay: -46s; }
+.bf3 { --by: 330px; animation: bird-cross 112s linear infinite; animation-delay: -78s; }
+
+@keyframes bird-cross {
+  0%   { opacity: 0; transform: translate(-140px, var(--by, 250px)); }
+  7%   { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(1760px, calc(var(--by, 250px) - 80px)); }
+}
+
+/* --- 远山 / 灯塔 --- */
+.hill { transition: fill 1.2s ease; }
+.hill-1 { fill: var(--hill-1); }
+.hill-2 { fill: var(--hill-2); }
+.hill-3 { fill: var(--hill-3); }
+.lighthouse path, .lighthouse rect { transition: fill 1.2s ease; }
+.lighthouse > path:first-child { fill: var(--lamp); }
+
+/* 岸边灯塔：白天灯是熄的，入夜才闪烁 */
+.lighthouse .light {
+  opacity: .24;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transition: opacity 1.2s ease;
+}
+html[data-theme="night"] .lighthouse .light {
+  opacity: 1;
+  animation: lamp 3.6s ease-in-out infinite;
+}
+@keyframes lamp {
+  0%, 100% { opacity: .35; transform: scale(.86); }
+  50%      { opacity: 1;   transform: scale(1.12); }
+}
+
+/* ==========================================================================
+   2. 海面
+   ========================================================================== */
+.wave-fill { transition: fill 1.2s ease; }
+.sea-far   .wave-fill { fill: var(--wave-1); animation: wave-slide 38s linear infinite; }
+.sea-mid   .wave-fill { fill: var(--wave-2); animation: wave-slide 24s linear infinite; }
+.sea-front .wave-fill { fill: var(--wave-3); animation: wave-slide 16s linear infinite; }
+
+.wave-foam {
+  fill: none;
+  stroke: var(--foam);
+  stroke-width: 9;
+  stroke-linecap: round;
+  opacity: .85;
+  transition: stroke 1.2s ease;
+  animation: wave-slide 16s linear infinite;
+}
+
+@keyframes wave-slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-1440px); }
+}
+
+/* --- 帆船：外层巡航（停留在可视区内往返，任何时候都能看到它在走）
+       关键：不要把起点放在画面外，否则加载后十几秒看不见船，看起来就像"没动" --- */
+.boat { transform: translate(730px, 620px); }
+.boat-drift { animation: boat-cruise 34s ease-in-out infinite; }
+@keyframes boat-cruise {
+  0%, 100% { transform: translateX(-150px); }
+  50%      { transform: translateX(150px); }
+}
+.boat-bob { animation: boat-idle 5.2s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+@keyframes boat-idle {
+  0%, 100% { transform: translateY(2px) rotate(-3.2deg); }
+  50%      { transform: translateY(-10px) rotate(3.2deg); }
+}
+
+/* ==========================================================================
+   海中灯塔：白天灯熄、塔身清晰；夜里灯芯点亮、光晕脉动、光束左右扫射
+   ========================================================================== */
+.lh-rock    { fill: var(--lh-rock); transition: fill 1.2s ease; }
+.lh-body    { fill: #FFF7E8; }
+.lh-band    { fill: #E2603C; }
+.lh-roof    { fill: #E2603C; }
+.lh-tip     { fill: #E2603C; }
+.lh-room    { fill: #4A3520; opacity: .9; }
+.lh-rail    { stroke: #4A3520; stroke-width: 3; stroke-linecap: round; }
+.lh-reflect { fill: #08303F; opacity: .26; transition: opacity 1.2s ease; }
+.lh-waterglow { fill: #FFE9A8; opacity: 0; transition: opacity 1.3s ease; }
+
+/* 白天：灯芯熄灭、光晕微弱、无光束 */
+.lh-glow { fill: #FFF3C4; opacity: .16; transition: opacity 1.2s ease; }
+.lh-lamp { fill: #B9AC90; transition: fill 1.2s ease; }
+.lh-beam { opacity: 0; transition: opacity 1.3s ease; transform-box: fill-box; transform-origin: 50% 50%; }
+
+/* 夜间：点亮 */
+html[data-theme="night"] .lh-glow {
+  opacity: .95;
+  animation: lamp-pulse 3.6s ease-in-out infinite;
+}
+html[data-theme="night"] .lh-lamp {
+  fill: #FFF3B0;
+  filter: drop-shadow(0 0 7px #FFE07A);
+}
+html[data-theme="night"] .lh-beam {
+  opacity: 1;
+  animation: beam-sweep 12s ease-in-out infinite;
+}
+html[data-theme="night"] .lh-reflect { opacity: .4; }
+html[data-theme="night"] .lh-waterglow {
+  opacity: .4;
+  animation: water-glow 3.6s ease-in-out infinite;
+}
+@keyframes water-glow {
+  0%, 100% { opacity: .22; transform: scaleX(.92); }
+  50%      { opacity: .5;  transform: scaleX(1.08); }
+}
+/* 缩放类动画统一以自身中心为原点，避免 transform-box 默认值带来的偏移 */
+.lh-glow,
+.lh-lamp,
+.lh-waterglow { transform-box: fill-box; transform-origin: 50% 50%; }
+
+@keyframes lamp-pulse {
+  0%, 100% { opacity: .72; transform: scale(.94); }
+  50%      { opacity: 1;   transform: scale(1.08); }
+}
+@keyframes beam-sweep {
+  0%, 100% { transform: rotate(-26deg); }
+  50%      { transform: rotate(26deg); }
+}
+.sail-b { fill: var(--foam); opacity: .78; transition: fill 1.2s ease; }
+.sail-f { fill: var(--foam); transition: fill 1.2s ease; }
+.hull   { fill: var(--ink); opacity: .82; transition: fill 1.2s ease; }
+.mast   { fill: var(--ink); opacity: .7; transition: fill 1.2s ease; }
+
+/* ==========================================================================
+   3. 漂流瓶（主角）
+   ========================================================================== */
+/* 横向漂移与起伏分层，互不覆盖。
+   起伏幅度上限约 26px：再高瓶底就会高过前浪浪尖，看起来像"浮在空中"。 */
+.bottle-drift { animation: bottle-sail 21s ease-in-out infinite; }
+@keyframes bottle-sail {
+  0%, 100% { transform: translateX(-72px); }
+  50%      { transform: translateX(72px); }
+}
+
+.bottle-move {
+  transform-box: fill-box;
+  transform-origin: 50% 62%;
+  animation: bottle-ride 4.2s ease-in-out infinite;
+}
+@keyframes bottle-ride {
+  0%, 100% { transform: translateY(0) rotate(-4.6deg); }
+  25%      { transform: translateY(-11px) rotate(-1deg); }
+  50%      { transform: translateY(-25px) rotate(4.8deg); }
+  72%      { transform: translateY(-12px) rotate(1.6deg); }
+}
+
+.bottle-shadow { fill: #08303F; opacity: .22; }
+
+.bottle .outline,
+.bottle .cork {
+  stroke: #4A3520;
+  stroke-width: 6.5;
+  stroke-linejoin: round;
+}
+.bottle .outline { fill: none; }
+.bottle .cork    { fill: url(#corkGrad); }
+
+.bottle .note { transform-box: fill-box; transform-origin: 50% 50%; animation: note-sway 7s ease-in-out infinite; }
+@keyframes note-sway {
+  0%, 100% { transform: rotate(-11deg) translateX(0); }
+  50%      { transform: rotate(-7deg) translateX(3px); }
+}
+
+.glare { animation: glare 6.5s ease-in-out infinite; }
+@keyframes glare {
+  0%, 100% { opacity: .55; }
+  50%      { opacity: .3; }
+}
+
+/* 瓶子表情 */
+.f-eye, .f-mouth { stroke: #4A3520; stroke-linecap: round; fill: none; }
+.f-eye   { stroke-width: 7.5; }
+.f-mouth { stroke-width: 7.5; }
+.f-blush { fill: #FF8A5C; opacity: .5; }
+
+.face { animation: face-sway 6.4s ease-in-out infinite; }
+@keyframes face-sway {
+  0%, 100% { transform: translate(0, 0); }
+  35%      { transform: translate(-3px, -1.5px); }
+  70%      { transform: translate(4px, 1px); }
+}
+
+.f-eye { transform-box: fill-box; transform-origin: 50% 100%; animation: blink 6.8s ease-in-out infinite; }
+@keyframes blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  94%           { transform: scaleY(.12); }
+}
+
+.splash-line {
+  fill: none;
+  stroke: var(--foam);
+  stroke-width: 6;
+  stroke-linecap: round;
+  opacity: .7;
+  transition: stroke 1.2s ease;
+  animation: splash 3.4s ease-in-out infinite;
+}
+.splash-line:nth-child(2) { animation-delay: -1.1s; }
+.splash-line:nth-child(3) { animation-delay: -2.2s; }
+@keyframes splash {
+  0%, 100% { opacity: .25; transform: translateY(2px); }
+  50%      { opacity: .85; transform: translateY(-3px); }
+}
+
+/* ==========================================================================
+   4. 气泡
+   ========================================================================== */
+.bubble {
+  fill: #FFFFFF;
+  fill-opacity: .42;
+  stroke: var(--foam);
+  stroke-width: 1.6;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: bubble-rise 6s ease-in infinite;
+  animation-delay: var(--d, 0s);
+}
+/* 气泡只在水面与海平线之间上浮，避免飘到天上 */
+@keyframes bubble-rise {
+  0%   { opacity: 0;   transform: translate(0, 34px) scale(.5); }
+  20%  { opacity: .8; }
+  70%  { opacity: .6; }
+  100% { opacity: 0;   transform: translate(22px, -152px) scale(1.05); }
+}
+
+/* ==========================================================================
+   5. 前景界面
+   ========================================================================== */
+.frame {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: clamp(12px, 2.4vmin, 28px) clamp(16px, 3.4vw, 48px) clamp(10px, 2vmin, 22px);
+}
+
+/* ---- 顶栏 ---- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  animation: fade-down .9s cubic-bezier(.2, .8, .25, 1) both;
+}
+
+.brand { display: flex; align-items: center; gap: clamp(8px, 1.2vmin, 12px); }
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: clamp(30px, 4.6vmin, 40px);
+  aspect-ratio: 1;
+  border-radius: 13px;
+  background: var(--orb-bg);
+  color: var(--orb-fg);
+  box-shadow: var(--shadow);
+  transition: transform .4s cubic-bezier(.2, .8, .25, 1), background-color 1.1s ease;
+}
+.brand-mark svg { width: 62%; height: 62%; }
+.brand:hover .brand-mark { transform: rotate(-9deg) scale(1.06); }
+
+.brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand-text strong { font-size: clamp(.92rem, 1.9vmin, 1.06rem); letter-spacing: .06em; }
+.brand-text em {
+  font-style: normal;
+  font-size: clamp(.68rem, 1.35vmin, .78rem);
+  color: var(--ui-muted);
+  letter-spacing: .22em;
+  transition: color 1.1s ease;
+}
+
+/* ---- 昼夜开关 ---- */
+.theme-btn { background: none; border: 0; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.tb-track {
+  position: relative;
+  display: block;
+  width: clamp(58px, 8.6vmin, 72px);
+  height: clamp(30px, 4.4vmin, 36px);
+  border-radius: 999px;
+  background: var(--pill-bg);
+  border: 1px solid var(--pill-border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px) saturate(1.3);
+  -webkit-backdrop-filter: blur(10px) saturate(1.3);
+  transition: background-color 1.1s ease, border-color 1.1s ease;
+}
+.tb-icon {
+  position: absolute;
+  top: 50%;
+  width: clamp(13px, 1.9vmin, 16px);
+  height: clamp(13px, 1.9vmin, 16px);
+  transform: translateY(-50%);
+  z-index: 2;
+  transition: opacity .5s ease, color .5s ease;
+}
+.tb-sun  { left: 9px;  color: #F07C1E; }
+.tb-moon { right: 9px; color: #FFE6A8; }
+
+html[data-theme="day"]   .tb-moon { opacity: .28; }
+html[data-theme="day"]   .tb-sun  { opacity: 1; }
+html[data-theme="night"] .tb-sun  { opacity: .3; }
+html[data-theme="night"] .tb-moon { opacity: 1; }
+
+.tb-orb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  height: calc(100% - 6px);
+  border-radius: 999px;
+  background: var(--orb-bg);
+  box-shadow: 0 3px 8px rgba(120, 70, 10, .2);
+  z-index: 1;
+  transition: transform .5s cubic-bezier(.5, -.12, .3, 1.3), background-color 1.1s ease;
+}
+html[data-theme="night"] .tb-orb { transform: translateX(100%); }
+.theme-btn:hover .tb-orb { filter: brightness(1.04); }
+.theme-btn:active .tb-track { transform: scale(.96); }
+
+/* ---- 主舞台 ---- */
+.stage {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: clamp(10px, 2.6vmin, 30px);
+  min-height: 0;
+}
+
+/* ---- 弧线大标题 ---- */
+.hero { display: grid; justify-items: center; gap: clamp(2px, 1vmin, 12px); }
+
+.arc-svg {
+  width: min(84vw, 40rem, 88vmin);
+  height: auto;
+  display: block;
+  overflow: visible;
+  animation: hero-in 1.15s cubic-bezier(.2, .85, .25, 1) both;
+}
+.arc-text {
+  font-family: var(--font);
+  font-size: 88px;
+  font-weight: 900;
+  letter-spacing: 7px;
+  fill: var(--hero);
+  filter: drop-shadow(0 5px 12px var(--hero-shadow));
+  transition: fill 1.1s ease;
+}
+
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(22px) scale(.94); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.tagline {
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 1.1vmin, 12px);
+  margin: 0;
+  font-size: clamp(.74rem, 1.75vmin, .98rem);
+  color: var(--ui-text);
+  letter-spacing: .16em;
+  opacity: .82;
+  transition: color 1.1s ease;
+  animation: fade-up 1s cubic-bezier(.2, .8, .25, 1) .18s both;
+}
+.tagline i { font-style: normal; opacity: .45; }
+
+/* ---- 一言 ---- */
+.quote {
+  display: flex;
+  align-items: baseline;
+  gap: .45em;
+  max-width: min(90vw, 48rem);
+  padding: clamp(10px, 1.7vmin, 17px) clamp(16px, 2.4vmin, 28px);
+  border-radius: 999px;
+  border: 1px solid var(--pill-border);
+  background: var(--pill-bg);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px) saturate(1.35);
+  -webkit-backdrop-filter: blur(12px) saturate(1.35);
+  color: var(--ui-text);
+  text-align: left;
+  cursor: pointer;
+  transition: transform .35s cubic-bezier(.2, .8, .25, 1), background-color 1.1s ease,
+              border-color 1.1s ease, box-shadow .35s ease, color 1.1s ease;
+  animation: fade-up 1s cubic-bezier(.2, .8, .25, 1) .28s both;
+}
+.quote:hover { transform: translateY(-3px); }
+.quote:active { transform: translateY(0) scale(.99); }
+
+.q-mark { color: var(--orb-fg); opacity: .8; font-size: clamp(.9rem, 2vmin, 1.15rem); transition: color 1.1s ease; }
+
+.q-text {
+  font-size: clamp(.8rem, 1.85vmin, 1.02rem);
+  line-height: 1.55;
+  letter-spacing: .02em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: opacity .32s ease, transform .32s ease;
+}
+.quote.is-swap .q-text { opacity: 0; transform: translateY(6px); }
+
+.q-from {
+  flex: none;
+  font-size: clamp(.68rem, 1.35vmin, .78rem);
+  color: var(--ui-muted);
+  white-space: nowrap;
+  transition: color 1.1s ease;
+}
+
+/* ---- 导航卡片 ---- */
+.links {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(10px, 3vmin, 44px);
+  width: min(94vw, 44rem);
+}
+
+.card {
+  display: grid;
+  justify-items: center;
+  gap: clamp(5px, 1vmin, 11px);
+  padding: clamp(4px, .9vmin, 10px);
+  border-radius: 24px;
+  text-align: center;
+  animation: fade-up .95s cubic-bezier(.2, .85, .25, 1) both;
+  animation-delay: calc(380ms + var(--i) * 95ms);
+}
+
+.orb {
+  display: grid;
+  place-items: center;
+  width: clamp(48px, 10vmin, 82px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--orb-bg);
+  color: var(--orb-fg);
+  box-shadow: var(--shadow);
+  transition: transform .42s cubic-bezier(.2, .85, .25, 1), box-shadow .42s ease,
+              background-color 1.1s ease, color 1.1s ease;
+}
+.orb svg { width: 46%; height: 46%; display: block; }
+
+.card:hover .orb,
+.card:focus-visible .orb {
+  transform: translateY(-8px) scale(1.07) rotate(-5deg);
+  box-shadow: 0 18px 34px rgba(140, 88, 8, .28);
+}
+.card:active .orb { transform: translateY(-2px) scale(1) rotate(0deg); }
+
+.c-name {
+  font-size: clamp(.76rem, 1.6vmin, .92rem);
+  font-weight: 600;
+  letter-spacing: .06em;
+  transition: color 1.1s ease;
+}
+.c-host {
+  font-size: clamp(.58rem, 1.15vmin, .7rem);
+  color: var(--ui-muted);
+  letter-spacing: .03em;
+  transition: color 1.1s ease;
+}
+
+/* ---- 页脚 ---- */
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .7em;
+  font-size: clamp(.62rem, 1.3vmin, .76rem);
+  color: var(--ui-muted);
+  letter-spacing: .08em;
+  animation: fade-up 1s cubic-bezier(.2, .8, .25, 1) .5s both;
+  transition: color 1.1s ease;
+}
+.foot i { font-style: normal; opacity: .5; }
+.foot a { border-bottom: 1px solid transparent; transition: color .3s ease, border-color .3s ease; }
+.foot a:hover { color: var(--ui-text); border-color: currentColor; }
+
+/* ---- 通用入场动画 ---- */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   搜索引擎 / 屏幕阅读器可见的正文（视觉隐藏，但可被抓取）
+   ========================================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+  overflow: hidden;
+  white-space: normal;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+}
+
+/* 无 JavaScript 时的降级排版 */
+.noscript-box {
+  max-width: 38rem;
+  margin: 12vh auto;
+  padding: 28px 30px;
+  border-radius: 20px;
+  background: rgba(255, 253, 246, .82);
+  border: 1px solid rgba(74, 53, 32, .14);
+  box-shadow: 0 12px 30px rgba(140, 88, 8, .18);
+  color: #4A3520;
+  line-height: 1.75;
+}
+.noscript-box h2 { margin: 0 0 .6em; font-size: 1.25rem; }
+.noscript-box ul { padding-left: 1.2em; }
+.noscript-box a { border-bottom: 1px solid currentColor; }
+
+/* ---- 点击涟漪 ---- */
+.ripple-layer { position: fixed; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  border: 2.5px solid var(--foam);
+  opacity: .9;
+  transform: translate(-50%, -50%) scale(.15);
+  animation: ripple-out 1.05s cubic-bezier(.15, .7, .3, 1) forwards;
+}
+@keyframes ripple-out {
+  to { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+}
+.ripple-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .5);
+  animation: bubble-pop 1.3s ease-out forwards;
+}
+@keyframes bubble-pop {
+  0%   { opacity: .9; transform: translate(-50%, -50%) scale(.3); }
+  100% { opacity: 0;  transform: translate(-50%, -180%) scale(1); }
+}
+
+/* ==========================================================================
+   6. 自适应
+   ========================================================================== */
+@media (max-height: 660px) {
+  .arc-svg { width: min(76vw, 32rem, 70vmin); }
+  .stage   { gap: clamp(8px, 1.8vmin, 18px); }
+  .orb     { width: clamp(44px, 12vmin, 64px); }
+  .quote   { padding-top: 8px; padding-bottom: 8px; }
+}
+
+@media (max-width: 620px) {
+  .c-host { display: none; }
+  .links  { width: 96vw; gap: clamp(6px, 2.4vw, 14px); }
+  .quote  { border-radius: 26px; }
+  .tagline span:nth-child(5) { display: none; }
+}
+
+@media (max-width: 380px) {
+  .links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stage { gap: 10px; }
+}
+
+/* 尊重系统「减少动态效果」：
+   只停掉闪烁、扫射、视差、涟漪这类容易引起不适的动效；
+   海浪、帆船、漂流瓶的慢速运动保留 —— 否则整页会退化成一张静止图片。 */
+@media (prefers-reduced-motion: reduce) {
+  .star,
+  .comet,
+  .sun-rays,
+  .cloud-drift,
+  .bird-fly,
+  .moon-bob,
+  .smile-star-pulse,
+  .lh-beam,
+  .lh-glow,
+  .lh-waterglow,
+  .light,
+  .glare,
+  .f-eye,
+  .face,
+  .note,
+  .splash-line {
+    animation: none !important;
+  }
+
+  .lh-beam { opacity: 0 !important; }
+  .bubbles { display: none !important; }
+  .lyr { transform: none !important; }
+  .ripple-layer { display: none !important; }
+
+  /* 保留动效但放缓节奏 */
+  .wave-fill,
+  .wave-foam { animation-duration: 64s !important; }
+  .boat-drift { animation-duration: 56s !important; }
+  .boat-bob { animation-duration: 8.4s !important; }
+  .bottle-drift { animation-duration: 34s !important; }
+  .bottle-move { animation-duration: 6.8s !important; }
 }

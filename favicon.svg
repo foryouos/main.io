@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFD63C"/>
+      <stop offset="100%" stop-color="#FF9418"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFEFD4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="64" height="64" rx="15" fill="url(#bg)"/>
+
+  <!-- 瓶身 -->
+  <path d="M26 20h12v9.5c0 3.2 1.6 4.6 3.4 6.6 2.1 2.4 3.6 4.4 3.6 8V54c0 2.6-2.1 4.6-4.7 4.6H23.7C21.1 58.6 19 56.6 19 54V44.1c0-3.6 1.5-5.6 3.6-8 1.8-2 3.4-3.4 3.4-6.6V20Z"
+        fill="url(#glass)" stroke="#C7541A" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M24.5 19.5h15" stroke="#C7541A" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- 木塞 -->
+  <path d="M26.5 19.5V13c0-1.1.9-2 2-2h7c1.1 0 2 .9 2 2v6.5Z" fill="#C08447" stroke="#8E5A28"
+        stroke-width="2.6" stroke-linejoin="round"/>
+
+  <!-- 高光 -->
+  <path d="M24 30v20" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" opacity=".75"/>
+
+  <!-- 表情 -->
+  <path d="M26.5 40.5q2.8 -4 5.6 0" fill="none" stroke="#C7541A" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M34.5 40.5q2.8 -4 5.6 0" fill="none" stroke="#C7541A" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M28 48.5q4.5 4 9 0" fill="none" stroke="#C7541A" stroke-width="2.8" stroke-linecap="round"/>
+</svg>

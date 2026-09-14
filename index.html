@@ -1,79 +1,633 @@
 <!DOCTYPE html>
-<html lang="hz-cn">
+<html lang="zh-CN" data-theme="day">
 <head>
-    <meta charset="UTF-8">
-    <meta name="referrer" content="never">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <meta name="foryouos Yu He Shui 瓶子的跋涉主页 记录生活,记录编程学习过程" content="foryouos &amp; 瓶子的跋涉 &amp; 编程笔记 博客,C语言,C++,网络后台服务器方向">
-    <link rel="icon" sizes="any" href="https://s1.ax1x.com/2023/03/06/ppZmqKO.png">
-    <meta name="瓶子的跋涉" content="www.foryouos.cn">
-    <meta name="google-site-verification" content="Nl5QWSBgILy_1BS-VWteWHJ9TOmiFp1mwbNe_v6aFNE" />
-    <meta name="baidu-site-verification" content="codeva-7uhuw3rv2I" />
-    <title>瓶子的跋涉</title>
-    <link rel="stylesheet" href="index.css" >
-    <script type="text/javascript" src="index.js" ></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
+  <!-- ============ 基础 SEO ============ -->
+  <title>瓶子的跋涉 · foryouos 的个人主页 | C/C++ 与后台服务器学习记录</title>
+  <meta name="description" content="瓶子的跋涉（foryouos.cn）是 foryouos 的个人站点，记录编程学习过程与生活：C / C++ 语言基础、Linux、网络编程与后台服务器方向的学习笔记，并汇总投资分析、博客、搜索等自建站点入口。">
+  <meta name="keywords" content="foryouos,瓶子的跋涉,个人主页,编程笔记,学习记录,C语言,C++,Linux,网络编程,Socket,TCP/IP,后台服务器,投资分析,量化">
+  <meta name="author" content="foryouos">
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+  <meta name="googlebot" content="index,follow,max-snippet:-1,max-image-preview:large">
+  <meta name="bingbot" content="index,follow,max-snippet:-1">
+  <meta name="baiduspider" content="index,follow">
+  <meta name="revisit-after" content="7 days">
+  <meta name="rating" content="general">
+  <meta name="distribution" content="global">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="geo.region" content="CN">
+  <meta name="geo.placename" content="China">
+  <link rel="canonical" href="https://www.foryouos.cn/">
+  <link rel="alternate" hreflang="zh-CN" href="https://www.foryouos.cn/">
+  <link rel="alternate" hreflang="x-default" href="https://www.foryouos.cn/">
+
+  <!-- ============ 社交 / 富媒体卡片 ============ -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="瓶子的跋涉">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:title" content="瓶子的跋涉 · foryouos 的个人主页">
+  <meta property="og:description" content="记录生活，记录编程学习过程。C / C++ 与后台服务器方向，长路漫漫，未来可期。">
+  <meta property="og:url" content="https://www.foryouos.cn/">
+  <meta property="og:image" content="https://www.foryouos.cn/og-cover.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="瓶子的跋涉 — 暖黄底色上漂着的一只微笑漂流瓶">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="瓶子的跋涉 · foryouos 的个人主页">
+  <meta name="twitter:description" content="记录生活，记录编程学习过程。C / C++ 与后台服务器方向，长路漫漫，未来可期。">
+  <meta name="twitter:image" content="https://www.foryouos.cn/og-cover.png">
+  <meta name="twitter:image:alt" content="瓶子的跋涉 — 暖黄底色上漂着的一只微笑漂流瓶">
+
+  <meta name="theme-color" content="#ffce00" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e2745" media="(prefers-color-scheme: dark)">
+  <meta name="google-site-verification" content="Nl5QWSBgILy_1BS-VWteWHJ9TOmiFp1mwbNe_v6aFNE">
+  <meta name="baidu-site-verification" content="codeva-7uhuw3rv2I">
+  <!-- 其他站长平台验证码（Sogou / 360 / Bing）在这里补 <meta name="..." content="..."> 即可 -->
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+  <!-- ============ 结构化数据：让搜索引擎识别站点实体与导航 ============ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://www.foryouos.cn/#website",
+        "url": "https://www.foryouos.cn/",
+        "name": "瓶子的跋涉",
+        "alternateName": ["foryouos", "瓶子的跋涉个人主页"],
+        "description": "foryouos 的个人站点，记录编程学习过程与生活：C / C++、Linux、网络编程与后台服务器方向的学习笔记。",
+        "inLanguage": "zh-CN",
+        "publisher": { "@id": "https://www.foryouos.cn/#person" }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://www.foryouos.cn/#person",
+        "name": "foryouos",
+        "alternateName": "瓶子的跋涉",
+        "url": "https://www.foryouos.cn/",
+        "description": "编程学习者，方向为 C / C++、Linux、网络编程与后台服务器开发。",
+        "knowsAbout": ["C 语言", "C++", "Linux", "网络编程", "TCP/IP", "Socket", "后台服务器开发", "数据结构与算法", "投资分析"],
+        "sameAs": [
+          "https://github.com/foryouos",
+          "https://www.blog.foryouos.cn/",
+          "https://www.so.foryouos.cn/",
+          "https://analyse.foryouos.cn/"
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://www.foryouos.cn/#navigation",
+        "name": "站点导航",
+        "itemListElement": [
+          {
+            "@type": "SiteNavigationElement",
+            "position": 1,
+            "name": "投资分析 · InvestAnalyse",
+            "description": "本地优先的开源投资分析终端：持仓总览、组合收益历史、基金与 ETF 成分穿透、市场数据看板。",
+            "url": "https://analyse.foryouos.cn/"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 2,
+            "name": "博客",
+            "description": "编程学习笔记与生活随笔。",
+            "url": "https://www.blog.foryouos.cn/"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 3,
+            "name": "搜索",
+            "description": "自建聚合搜索入口。",
+            "url": "https://www.so.foryouos.cn/"
+          },
+          {
+            "@type": "SiteNavigationElement",
+            "position": 4,
+            "name": "GitHub",
+            "description": "代码仓库与开源项目。",
+            "url": "https://github.com/foryouos"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- 首屏前确定昼夜主题，避免闪白/闪黄（与 index.js 中的规则保持一致） -->
+  <script>
+    (function () {
+      try {
+        var m = /[?&]theme=(day|night)\b/.exec(location.search);
+        var t = m ? m[1] : localStorage.getItem('foryouos-theme');
+        if (t !== 'day' && t !== 'night') {
+          var h = new Date().getHours();
+          t = (h >= 6 && h < 18) ? 'day' : 'night';
+        }
+        if (m) { try { localStorage.setItem('foryouos-theme', t); } catch (e) {} }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { /* 保持 HTML 中的默认值 */ }
+    })();
+  </script>
+
+  <!-- ?v= 用于缓存击穿：每次改动样式/脚本后把版本号 +1，避免浏览器/预览拿到旧文件 -->
+  <link rel="stylesheet" href="index.css?v=4">
 </head>
 <body>
-    <div>
-    <video muted data-autoplay loop="loop" src="https://s138.ananas.chaoxing.com/video/24/dd/68/a90d6c67e0940daf9b7c758174ceb97b/sd.mp4?at_=1679663405342" autoplay="autoplay" class="video-bg" id="sound" controlsList="nodownload" oncontextmenu="return false;">瓶子的跋涉主页,Yuheshui 于喝水C++后台服务器方向,瓶子的跋涉博客,瓶子大的跋涉导航栏,记录生活记录学习过程,在成长的路上,我们一起长大,长路漫漫,未来可期</video>
-    </div>
-    <h1>瓶子的跋涉</h1>
-    <!--声音开关-->
-    <img src="https://i.imgtg.com/2023/03/09/YQ3SK.png" id="reimg" title="声音开关" alt="声音开关">
 
+<!-- ================= 背景：纯手绘 SVG 场景 ================= -->
+<div class="scene" id="scene" aria-hidden="true">
+  <svg class="scene-svg" id="sceneSvg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="skyDay" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#FFF3B0"/>
+        <stop offset="34%"  stop-color="#FFD63C"/>
+        <stop offset="72%"  stop-color="#FFB029"/>
+        <stop offset="100%" stop-color="#FF9A22"/>
+      </linearGradient>
+      <linearGradient id="skyNight" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#040D1E"/>
+        <stop offset="42%"  stop-color="#0D2543"/>
+        <stop offset="78%"  stop-color="#16405C"/>
+        <stop offset="100%" stop-color="#1D5069"/>
+      </linearGradient>
+      <linearGradient id="sunGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stop-color="#FFD64A"/>
+        <stop offset="60%"  stop-color="#FF9420"/>
+        <stop offset="100%" stop-color="#FF7A12"/>
+      </linearGradient>
+      <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#FFE07A" stop-opacity=".55"/>
+        <stop offset="55%"  stop-color="#FFA326" stop-opacity=".20"/>
+        <stop offset="100%" stop-color="#FFA326" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%"   stop-color="#FFF6D8" stop-opacity=".85"/>
+        <stop offset="45%"  stop-color="#CFE6FF" stop-opacity=".20"/>
+        <stop offset="100%" stop-color="#CFE6FF" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="glassGrad" x1="0" y1="0" x2="0.2" y2="1">
+        <stop offset="0%"   stop-color="#FFFFFF" stop-opacity=".97"/>
+        <stop offset="55%"  stop-color="#FFF6E2" stop-opacity=".88"/>
+        <stop offset="100%" stop-color="#FFE6BE" stop-opacity=".80"/>
+      </linearGradient>
+      <linearGradient id="corkGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%"   stop-color="#EBB681"/>
+        <stop offset="100%" stop-color="#B3773B"/>
+      </linearGradient>
+      <linearGradient id="cometGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%"   stop-color="#FFFDF0" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#FFFDF0" stop-opacity=".9"/>
+      </linearGradient>
+      <!-- 灯塔光束：靠近灯芯处亮，向远处淡出 -->
+      <linearGradient id="beamL" x1="100%" y1="0" x2="0%" y2="0">
+        <stop offset="0%"   stop-color="#FFF6C8" stop-opacity=".62"/>
+        <stop offset="55%"  stop-color="#FFF0A8" stop-opacity=".22"/>
+        <stop offset="100%" stop-color="#FFF0A8" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="beamR" x1="0%" y1="0" x2="100%" y2="0">
+        <stop offset="0%"   stop-color="#FFF6C8" stop-opacity=".62"/>
+        <stop offset="55%"  stop-color="#FFF0A8" stop-opacity=".22"/>
+        <stop offset="100%" stop-color="#FFF0A8" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
 
-    <div id="one_ord">
-        <p id="hitokoto">
-            『
-            <a href="#" id="hitokoto_text" style="color: antiquewhite;">:D 获取中...</a>
-            』
-                ——
-            <a href="#" id="hitokoto_author" >作者</a>
-        </p>
-    </div>
-    <br>
-<!--    图片呈现  图片廊-->
+    <!-- ============ 远景层：天空 / 星 / 月 / 日 / 云 / 鸟 / 远山 ============ -->
+    <g class="lyr lyr-far">
+      <rect class="sky sky-day"   x="-1000" y="-200" width="3200" height="1400" fill="url(#skyDay)"/>
+      <rect class="sky sky-night" x="-1000" y="-200" width="3200" height="1400" fill="url(#skyNight)"/>
 
-    <div class="photo_center">
-        <div class="responsive">
-          <div class="img">
-            <a target="_blank" href="https://www.so.foryouos.cn">
-              <img src="https://i.imgtg.com/2023/03/09/YQ6ml.png" alt="Trolltunga Norway" title="搜索" width="300" height="200" class="img_large">
-            </a>
-<!--            <div class="desc">Add a description of the image here</div>-->
-          </div>
-        </div>
+      <g class="stars">
+        <circle class="star" cx="60"   cy="120" r="2.6"/><circle class="star" cx="150"  cy="60"  r="2"/>
+        <circle class="star" cx="250"  cy="150" r="2.2"/><circle class="star" cx="360"  cy="80"  r="2.8"/>
+        <circle class="star" cx="470"  cy="190" r="2"/>  <circle class="star" cx="560"  cy="90"  r="2.4"/>
+        <circle class="star" cx="640"  cy="180" r="2"/>  <circle class="star" cx="760"  cy="70"  r="2.6"/>
+        <circle class="star" cx="860"  cy="150" r="2.2"/><circle class="star" cx="960"  cy="60"  r="3"/>
+        <circle class="star" cx="1060" cy="140" r="2"/>  <circle class="star" cx="1160" cy="80"  r="2.4"/>
+        <circle class="star" cx="1260" cy="180" r="2.2"/><circle class="star" cx="1360" cy="100" r="2.6"/>
+        <circle class="star" cx="1440" cy="60"  r="2"/>  <circle class="star" cx="100"  cy="260" r="2.2"/>
+        <circle class="star" cx="220"  cy="320" r="2.6"/><circle class="star" cx="330"  cy="250" r="2"/>
+        <circle class="star" cx="450"  cy="330" r="2.4"/><circle class="star" cx="570"  cy="290" r="2"/>
+        <circle class="star" cx="690"  cy="360" r="2.6"/><circle class="star" cx="800"  cy="300" r="2.2"/>
+        <circle class="star" cx="920"  cy="350" r="2"/>  <circle class="star" cx="1040" cy="290" r="2.4"/>
+        <circle class="star" cx="1150" cy="340" r="2.6"/><circle class="star" cx="1280" cy="270" r="2"/>
+        <circle class="star" cx="1400" cy="330" r="2.2"/><circle class="star" cx="40"   cy="400" r="2"/>
+        <circle class="star" cx="180"  cy="440" r="2.4"/><circle class="star" cx="300"  cy="410" r="2"/>
+        <circle class="star" cx="420"  cy="470" r="2.2"/><circle class="star" cx="540"  cy="430" r="2.6"/>
+        <circle class="star" cx="660"  cy="480" r="2"/>  <circle class="star" cx="790"  cy="450" r="2.2"/>
+        <circle class="star" cx="900"  cy="500" r="2.4"/><circle class="star" cx="1020" cy="460" r="2"/>
+        <circle class="star" cx="1180" cy="500" r="2.2"/><circle class="star" cx="1320" cy="440" r="2.6"/>
+        <circle class="star" cx="1420" cy="480" r="2"/>  <circle class="star" cx="1500" cy="250" r="2.2"/>
+      </g>
 
+      <!-- 流星 -->
+      <g class="comet">
+        <path d="M0 0 L118 64" stroke="url(#cometGrad)" stroke-width="3.2" stroke-linecap="round"/>
+        <circle cx="0" cy="0" r="4.2" fill="#FFFDF0"/>
+      </g>
 
-        <div class="responsive">
-          <div class="img">
-            <a target="_blank" href="https://www.blog.foryouos.cn">
-              <img src="https://i.imgtg.com/2023/03/24/9ILcG.png" alt="博客" title="博客" width="600" height="400" style="
-    border-radius: 48px;">
-            </a>
-<!--            <div class="desc">Add a description of the image here</div>-->
-          </div>
-        </div>
+      <!-- 月亮 -->
+      <g class="moon">
+        <circle class="moon-glow" cx="860" cy="270" r="152" fill="url(#moonGlow)"/>
+        <g class="moon-bob">
+          <circle cx="860" cy="270" r="84" fill="#FFF7DE"/>
+          <circle cx="818" cy="248" r="13" fill="#F0E3BD" opacity=".7"/>
+          <circle cx="892" cy="308" r="18" fill="#F0E3BD" opacity=".55"/>
+          <circle cx="878" cy="228" r="9"  fill="#F0E3BD" opacity=".6"/>
+          <!-- 睡脸 -->
+          <path d="M828 262 q9 -11 18 0 M874 262 q9 -11 18 0" stroke="#8E7C55" stroke-width="5.5"
+                stroke-linecap="round" fill="none"/>
+          <path d="M846 290 q14 13 28 0" stroke="#8E7C55" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <circle cx="818" cy="282" r="7.5" fill="#FFC9A6" opacity=".6"/>
+          <circle cx="900" cy="282" r="7.5" fill="#FFC9A6" opacity=".6"/>
+        </g>
+      </g>
 
-        <div class="responsive">
-          <div class="img">
-            <a target="_blank" href="https://github.com/foryouos">
-              <img src="https://i.imgtg.com/2023/03/09/YQ8Yg.png" alt="Northern Lights" title="个人简介" width="600" height="400">
-            </a>
-<!--            <div class="desc">Add a description of the image here</div>-->
-          </div>
-        </div>
+      <!-- 微笑的星星（彩蛋） -->
+      <g class="smile-star" transform="translate(300,180) scale(1.35)">
+        <path class="smile-star-pulse" d="M0 -26 L6.5 -8.9 L24.7 -8 L10.5 3.4 L15.3 21 L0 11 L-15.3 21 L-10.5 3.4
+                 L-24.7 -8 L-6.5 -8.9 Z" fill="#FFFBE8"/>
+        <circle cx="-6.5" cy="-6" r="1.9" fill="#6B5426"/>
+        <circle cx="6.5" cy="-6" r="1.9" fill="#6B5426"/>
+        <path d="M-6 0.5 q6 6.5 12 0" stroke="#6B5426" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+      </g>
 
+      <!-- 太阳 -->
+      <g class="sun-wrap">
+        <circle class="sun-glow" cx="720" cy="700" r="430" fill="url(#sunGlow)"/>
+        <g class="sun-rays">
+          <g transform="rotate(0 720 700)"><rect x="712" y="352" width="16" height="88" rx="8"/></g>
+          <g transform="rotate(30 720 700)"><rect x="712" y="352" width="16" height="88" rx="8"/></g>
+          <g transform="rotate(60 720 700)"><rect x="712" y="352" width="16" height="88" rx="8"/></g>
+          <g transform="rotate(90 720 700)"><rect x="712" y="352" width="16" height="88" rx="8"/></g>
+          <g transform="rotate(120 720 700)"><rect x="712" y="352" width="16" height="88" rx="8"/></g>
+          <g transform="rotate(150 720 700)"><rect x="712" y="352" width="16" height="88" rx="8"/></g>
+          <g transform="rotate(180 720 700)"><rect x="712" y="352" width="16" height="88" rx="8"/></g>
+          <g transform="rotate(210 720 700)"><rect x="712" y="352" width="16" height="88" rx="8"/></g>
+          <g transform="rotate(240 720 700)"><rect x="712" y="352" width="16" height="88" rx="8"/></g>
+          <g transform="rotate(270 720 700)"><rect x="712" y="352" width="16" height="88" rx="8"/></g>
+          <g transform="rotate(300 720 700)"><rect x="712" y="352" width="16" height="88" rx="8"/></g>
+          <g transform="rotate(330 720 700)"><rect x="712" y="352" width="16" height="88" rx="8"/></g>
+        </g>
+        <circle class="sun-body" cx="720" cy="700" r="250" fill="url(#sunGrad)"/>
+      </g>
 
-    </div>
-<!--  页尾  -->
-    <footer id="footer">
-        <a href="https://github.com/foryouos" target="_blank">
-            <img src="https://i.imgtg.com/2023/03/09/YQIAs.png" title="GitHub" alt="GitHub" class="footer_GitHub">
-            <span>Github地址</span>
-        </a>
+      <!-- 云（外层负责漂移，内层负责定位与缩放，避免 transform 互相覆盖） -->
+      <g class="cloud-drift cd1">
+        <g class="cloud" transform="translate(200,190)">
+          <ellipse cx="0" cy="16" rx="88" ry="27"/>
+          <circle cx="-42" cy="-4" r="31"/><circle cx="4" cy="-18" r="39"/><circle cx="52" cy="0" r="26"/>
+        </g>
+      </g>
+      <g class="cloud-drift cd2">
+        <g class="cloud" transform="translate(770,160) scale(1.18)">
+          <ellipse cx="0" cy="16" rx="88" ry="27"/>
+          <circle cx="-42" cy="-4" r="31"/><circle cx="4" cy="-18" r="39"/><circle cx="52" cy="0" r="26"/>
+        </g>
+      </g>
+      <g class="cloud-drift cd3">
+        <g class="cloud" transform="translate(420,96) scale(.72)">
+          <ellipse cx="0" cy="16" rx="88" ry="27"/>
+          <circle cx="-42" cy="-4" r="31"/><circle cx="4" cy="-18" r="39"/><circle cx="52" cy="0" r="26"/>
+        </g>
+      </g>
+      <g class="cloud-drift cd4">
+        <g class="cloud" transform="translate(1060,420) scale(.58)">
+          <ellipse cx="0" cy="16" rx="88" ry="27"/>
+          <circle cx="-42" cy="-4" r="31"/><circle cx="4" cy="-18" r="39"/><circle cx="52" cy="0" r="26"/>
+        </g>
+      </g>
 
-    </footer>
+      <!-- 海鸟 -->
+      <g class="bird-fly bf1"><g class="bird b1">
+        <path d="M-17 0 Q-8.5 -12 0 -1 Q8.5 -12 17 0" fill="none" stroke-width="3.6"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </g></g>
+      <g class="bird-fly bf2"><g class="bird b2">
+        <path d="M-13 0 Q-6.5 -9 0 -1 Q6.5 -9 13 0" fill="none" stroke-width="3.1"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </g></g>
+      <g class="bird-fly bf3"><g class="bird b3">
+        <path d="M-11 0 Q-5.5 -8 0 -1 Q5.5 -8 11 0" fill="none" stroke-width="2.8"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </g></g>
+
+      <!-- 远山与灯塔 -->
+      <g class="islands">
+        <path class="hill hill-1" d="M-120 646 C-40 596 60 566 168 560 C270 554 340 584 420 646 Z"/>
+        <path class="hill hill-2" d="M370 646 C440 616 520 600 600 606 C676 612 726 628 780 646 Z"/>
+        <path class="hill hill-3" d="M980 646 C1060 592 1170 566 1280 574 C1372 580 1430 612 1490 646 Z"/>
+        <g class="lighthouse" transform="translate(1256,562)">
+          <path d="M-13 84 L-7 6 L7 6 L13 84 Z" fill="#FFF6E4"/>
+          <rect x="-10" y="26" width="20" height="12" fill="#E2603C"/>
+          <path d="M-11 6 L0 -12 L11 6 Z" fill="#E2603C"/>
+          <g class="light">
+            <circle cx="0" cy="-2" r="16" fill="#FFF3C4" opacity=".55"/>
+            <circle cx="0" cy="-2" r="6" fill="#FFE07A"/>
+          </g>
+        </g>
+      </g>
+    </g>
+
+    <!-- ============ 中景层：远海 ============ -->
+    <g class="lyr lyr-mid">
+      <g class="sea sea-far">
+        <path class="wave-fill" d="M-720 630 q90 -16 180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 t180 0 L3780 1100 L-720 1100 Z"/>
+      </g>
+    </g>
+
+    <!-- ============ 近景层：中浪 / 帆船 / 漂流瓶 / 气泡 / 前浪 ============ -->
+    <g class="lyr lyr-sea">
+      <g class="sea sea-mid">
+        <path class="wave-fill" d="M-960 692 q120 -34 240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 L3600 1100 L-960 1100 Z"/>
+      </g>
+
+      <!-- 远处帆船：boat-drift 负责横越海面，boat 负责定位，boat-bob 负责起伏 -->
+      <g class="boat-drift">
+        <g class="boat">
+          <g class="boat-bob">
+            <path class="sail-b" d="M0 -78 L0 -4 L-42 -4 Z"/>
+            <path class="sail-f" d="M4 -96 L4 -4 L46 -4 Z"/>
+            <path class="hull" d="M-52 -2 L52 -2 L38 16 L-38 16 Z"/>
+            <rect class="mast" x="-2" y="-100" width="3.4" height="98" rx="1.7"/>
+          </g>
+        </g>
+      </g>
+
+      <!-- ============ 海中灯塔（白天灯熄、夜里亮起并扫射光束） ============ -->
+      <g class="lh" transform="translate(900,702)">
+        <!-- 水下倒影 -->
+        <ellipse class="lh-reflect" cx="4" cy="10" rx="56" ry="11"/>
+        <!-- 夜间水面灯影 -->
+        <ellipse class="lh-waterglow" cx="2" cy="22" rx="42" ry="8"/>
+        <!-- 礁石 -->
+        <path class="lh-rock" d="M-54 2 C-42 -20 -22 -33 0 -33 C22 -33 42 -20 54 2 Z"/>
+        <!-- 塔身（下宽上窄） -->
+        <path class="lh-body" d="M-16 -32 L-10 -124 H10 L16 -32 Z"/>
+        <!-- 红环 -->
+        <path class="lh-band" d="M-14.7 -48 L14.7 -48 L13.9 -60 L-13.9 -60 Z"/>
+        <path class="lh-band" d="M-12.5 -80 L12.5 -80 L11.8 -92 L-11.8 -92 Z"/>
+        <!-- 平台栏杆 -->
+        <path class="lh-rail" d="M-18 -124 H18"/>
+        <!-- 灯室 -->
+        <rect class="lh-room" x="-14" y="-144" width="28" height="20" rx="3"/>
+        <!-- 顶盖与塔尖 -->
+        <path class="lh-roof" d="M-17 -144 Q0 -162 17 -144 Z"/>
+        <circle class="lh-tip" cx="0" cy="-161" r="3.4"/>
+        <!-- 光晕 / 灯芯 -->
+        <circle class="lh-glow" cx="0" cy="-134" r="36"/>
+        <circle class="lh-lamp" cx="0" cy="-134" r="7.2"/>
+        <!-- 夜间光束（双向，绕灯芯左右扫射） -->
+        <g class="lh-beam">
+          <path d="M0 -134 L-268 -200 L-268 -68 Z" fill="url(#beamL)"/>
+          <path d="M0 -134 L268 -200 L268 -68 Z" fill="url(#beamR)"/>
+        </g>
+      </g>
+
+      <!-- 漂流瓶：bottle-drift 负责横向漂移，bottle-move 负责起伏，bottle 负责定位 -->
+      <g class="bottle-drift">
+        <g class="bottle-move">
+        <g class="bottle" transform="translate(660,748) scale(.85)">
+          <ellipse class="bottle-shadow" cx="24" cy="44" rx="188" ry="17"/>
+          <g class="bottle-body">
+            <rect x="-95" y="-62" width="190" height="124" rx="46" fill="url(#glassGrad)"/>
+            <path d="M86 -62 C130 -62 146 -36 148 -18 H196 C206 -18 210 -26 216 -26 V26
+                     C210 26 206 18 196 18 H148 C146 36 130 62 86 62 Z" fill="url(#glassGrad)"/>
+            <!-- 瓶中信 -->
+            <g class="note" transform="rotate(-11 -46 4)">
+              <rect x="-78" y="-34" width="64" height="68" rx="12" fill="#FFFCF2" stroke="#E6CDA0" stroke-width="4"/>
+              <path d="M-64 -14 h36 M-64 0 h36 M-64 14 h22" stroke="#DDB87F" stroke-width="5" stroke-linecap="round"/>
+            </g>
+            <!-- 玻璃高光 -->
+            <rect class="glare" x="-74" y="-50" width="126" height="13" rx="6.5" fill="#FFFFFF" opacity=".55"/>
+            <circle cx="34" cy="-40" r="7" fill="#FFFFFF" opacity=".45"/>
+            <!-- 轮廓 -->
+            <path class="outline" d="M-49 -62 H86 C130 -62 146 -36 148 -18 H196 C206 -18 210 -26 216 -26 V26
+                     C210 26 206 18 196 18 H148 C146 36 130 62 86 62 H-49 A46 46 0 0 1 -95 16 V-16 A46 46 0 0 1 -49 -62 Z"/>
+            <!-- 木塞 -->
+            <path class="cork" d="M208 -19 H242 A9 9 0 0 1 251 -10 V10 A9 9 0 0 1 242 19 H208 Z"/>
+            <rect x="238" y="-14" width="9" height="28" rx="4" fill="#8E5A28" opacity=".5"/>
+            <!-- 表情 -->
+            <g class="face">
+              <path d="M4 -24 q11 -15 22 0" class="f-eye"/>
+              <path d="M52 -24 q11 -15 22 0" class="f-eye"/>
+              <path d="M10 6 q31 27 62 0" class="f-mouth"/>
+              <circle cx="0" cy="16" r="8.5" class="f-blush"/>
+              <circle cx="86" cy="16" r="8.5" class="f-blush"/>
+            </g>
+            <!-- 水花 -->
+            <g class="splash">
+              <path d="M-126 30 q17 -14 34 0" class="splash-line"/>
+              <path d="M104 34 q15 -13 30 0" class="splash-line"/>
+              <path d="M-30 46 q19 -15 38 0" class="splash-line"/>
+            </g>
+          </g>
+        </g>
+      </g>
+      </g>
+
+      <!-- 气泡 -->
+      <g class="bubbles">
+        <circle class="bubble" style="--x:520px; --d:0s;   --s:1.1" cx="520" cy="800" r="9"/>
+        <circle class="bubble" style="--x:600px; --d:1.4s; --s:.8"  cx="600" cy="820" r="6"/>
+        <circle class="bubble" style="--x:880px; --d:.6s;  --s:1.3" cx="880" cy="810" r="11"/>
+        <circle class="bubble" style="--x:960px; --d:2.2s; --s:.9"  cx="960" cy="830" r="7"/>
+        <circle class="bubble" style="--x:420px; --d:2.9s; --s:1"   cx="420" cy="815" r="8"/>
+        <circle class="bubble" style="--x:1080px;--d:3.4s; --s:1.15" cx="1080" cy="825" r="10"/>
+        <circle class="bubble" style="--x:250px; --d:1.9s; --s:.85" cx="250" cy="805" r="7"/>
+        <circle class="bubble" style="--x:1180px;--d:.9s;  --s:1"   cx="1180" cy="818" r="8"/>
+      </g>
+
+      <g class="sea sea-front">
+        <path class="wave-fill" d="M-960 786 q120 -30 240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 L3600 1100 L-960 1100 Z"/>
+        <path class="wave-foam" d="M-960 786 q120 -30 240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0 t240 0"/>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<!-- 点击涟漪容器 -->
+<div class="ripple-layer" id="rippleLayer" aria-hidden="true"></div>
+
+<!-- ================= 可索引正文 =================
+     页面视觉以单屏图形为主，这里用「视觉隐藏、屏幕阅读器与搜索引擎可见」的
+     方式提供真实、与页面一致的描述性文字（非关键词堆砌）。 -->
+<div class="sr-only">
+  <h1>瓶子的跋涉 — foryouos 的个人主页</h1>
+
+  <p>瓶子的跋涉（foryouos.cn）是 foryouos 的个人站点，用来记录编程学习过程与生活片段。
+     内容围绕 C / C++ 语言基础、Linux 使用、网络编程（TCP/IP、Socket）与后台服务器方向展开，
+     也会写下一些日常思考与随笔。站名取意于漂流瓶：把当下写下的东西装进瓶子放进海里，
+     不知道会漂到哪里，但总归是在往前走。</p>
+
+  <p>本站页面为纯 HTML、CSS 与 JavaScript 编写，背景是手绘的 SVG 场景（日出与星海、海浪与漂流瓶），
+     不依赖任何外部图片与视频资源，因此在弱网或资源失效时依旧可以完整访问。
+     页面提供昼夜两套配色：访客打开时会依据本地时间自动选择，也可以手动切换并记住选择。</p>
+
+  <h2>关注方向</h2>
+  <ul>
+    <li>C 语言与 C++：语法基础、指针与内存管理、面向对象与标准库</li>
+    <li>Linux 与网络编程：系统调用、TCP/IP 协议、Socket 编程、并发与 IO 模型</li>
+    <li>后台服务器开发：进程与线程、服务端架构、性能与调试</li>
+    <li>数据结构与算法：基础数据结构、常见算法题的思路整理</li>
+    <li>投资与量化分析：指数基金、ETF 持仓穿透与组合收益回顾（业余兴趣）</li>
+  </ul>
+
+  <h2>站点导航</h2>
+  <ul>
+    <li><a href="https://analyse.foryouos.cn/">投资分析 · InvestAnalyse</a> — 本地优先的开源投资分析终端，支持持仓总览、组合收益历史、基金与 ETF 成分股穿透、市场数据看板。</li>
+    <li><a href="https://www.blog.foryouos.cn/">博客</a> — 编程学习笔记与生活随笔。</li>
+    <li><a href="https://www.so.foryouos.cn/">搜索</a> — 自建聚合搜索入口。</li>
+    <li><a href="https://github.com/foryouos">GitHub</a> — 代码仓库与开源项目。</li>
+  </ul>
+
+  <p>联系方式：<a href="https://github.com/foryouos">github.com/foryouos</a>。
+     本站内容以学习记录为主，欢迎交流指正。</p>
+</div>
+
+<!-- ================= 前景界面 ================= -->
+<div class="frame">
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="瓶子的跋涉 · 首页">
+      <span class="brand-mark">
+        <svg viewBox="0 0 28 28" aria-hidden="true">
+          <path d="M11 3h6v3.2c0 1.1.5 1.6 1.2 2.3.9.9 1.8 2 1.8 3.9v11.3c0 1.3-1.1 2.3-2.4 2.3h-7.2C9.1 26 8 25 8 23.7V12.4c0-1.9.9-3 1.8-3.9.7-.7 1.2-1.2 1.2-2.3V3Z"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M10.5 3h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M11.6 14.6h4.8M11.6 18h3.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <strong>foryouos</strong>
+        <em>瓶子的跋涉</em>
+      </span>
+    </a>
+
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="切换昼夜主题" aria-pressed="false">
+      <span class="tb-track">
+        <svg class="tb-icon tb-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2" fill="currentColor"/>
+          <path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M18.5 5.5l-1.9 1.9M7.4 16.6l-1.9 1.9"
+                stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+        </svg>
+        <svg class="tb-icon tb-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 14.6A8.6 8.6 0 0 1 9.4 4 8.6 8.6 0 1 0 20 14.6Z" fill="currentColor"/>
+        </svg>
+        <span class="tb-orb"></span>
+      </span>
+    </button>
+  </header>
+
+  <main class="stage">
+    <section class="hero">
+      <!-- 装饰性弧线标题：站点名称由上方 h1 提供给搜索引擎与屏幕阅读器 -->
+      <svg class="arc-svg" viewBox="0 0 760 200" aria-hidden="true">
+        <defs>
+          <path id="arcPath" d="M30 175 Q380 15 730 175" fill="none"/>
+        </defs>
+        <text class="arc-text">
+          <textPath href="#arcPath" startOffset="50%" text-anchor="middle">瓶子的跋涉</textPath>
+        </text>
+      </svg>
+      <p class="tagline">
+        <span>记录生活</span><i>·</i><span>编程学习</span><i>·</i><span>长路漫漫，未来可期</span>
+      </p>
+    </section>
+
+    <button class="quote" id="quote" type="button" title="点一下，换一句">
+      <span class="q-mark" aria-hidden="true">「</span>
+      <span class="q-text" id="quoteText">正在捞一句水面上的话…</span>
+      <span class="q-from" id="quoteFrom">— 一言</span>
+      <span class="q-mark" aria-hidden="true">」</span>
+    </button>
+
+    <nav class="links" aria-label="站点导航">
+      <a class="card" href="https://analyse.foryouos.cn/" target="_blank" rel="noopener noreferrer" style="--i:0">
+        <span class="orb">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3.4 17.6 9 11.2l3.7 3.2 7.4-8.4" fill="none" stroke="currentColor"
+                  stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M15.6 5.6h4.8v4.8" fill="none" stroke="currentColor"
+                  stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3.4 20.6h17.2" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="c-name">投资分析</span>
+        <span class="c-host">analyse.foryouos.cn</span>
+      </a>
+
+      <a class="card" href="https://www.blog.foryouos.cn/" target="_blank" rel="noopener noreferrer" style="--i:1">
+        <span class="orb">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 6.6A3.6 3.6 0 0 0 8.4 3H3.6v14.8h4.9A3.6 3.6 0 0 1 12 21a3.6 3.6 0 0 1 3.5-3.2h4.9V3h-4.8A3.6 3.6 0 0 0 12 6.6Z"
+                  fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/>
+            <path d="M12 6.6V21" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="c-name">博客</span>
+        <span class="c-host">blog.foryouos.cn</span>
+      </a>
+
+      <a class="card" href="https://www.so.foryouos.cn/" target="_blank" rel="noopener noreferrer" style="--i:2">
+        <span class="orb">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10.6" cy="10.6" r="6.4" fill="none" stroke="currentColor" stroke-width="2.1"/>
+            <path d="M15.4 15.4 21 21" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="c-name">搜索</span>
+        <span class="c-host">so.foryouos.cn</span>
+      </a>
+
+      <a class="card" href="https://github.com/foryouos" target="_blank" rel="noopener noreferrer" style="--i:3">
+        <span class="orb">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+              0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01
+              1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+              0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27
+              c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15
+              0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01
+              8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+          </svg>
+        </span>
+        <span class="c-name">GitHub</span>
+        <span class="c-host">github.com/foryouos</span>
+      </a>
+    </nav>
+  </main>
+
+  <footer class="foot">
+    <span>© <span id="year">2026</span> 瓶子的跋涉</span>
+    <i>·</i>
+    <a href="https://github.com/foryouos" target="_blank" rel="noopener noreferrer">Github 地址</a>
+  </footer>
+</div>
+
+<noscript>
+  <div class="noscript-box">
+    <h2>瓶子的跋涉 · foryouos</h2>
+    <p>本站背景是 SVG 动画场景，启用 JavaScript 后可以看到昼夜主题切换、海浪与漂流瓶动效。
+       当前未启用 JavaScript，你仍可以访问下列站点：</p>
+    <ul>
+      <li><a href="https://analyse.foryouos.cn/">投资分析 · InvestAnalyse</a></li>
+      <li><a href="https://www.blog.foryouos.cn/">博客</a></li>
+      <li><a href="https://www.so.foryouos.cn/">搜索</a></li>
+      <li><a href="https://github.com/foryouos">GitHub</a></li>
+    </ul>
+    <p>内容方向：C / C++、Linux、网络编程与后台服务器开发的学习记录。</p>
+  </div>
+</noscript>
+
+<script src="index.js?v=4"></script>
 </body>
 </html>
