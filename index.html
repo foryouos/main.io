@@ -112,9 +112,8 @@
           {
             "@type": "SiteNavigationElement",
             "position": 4,
-            "name": "GitHub",
-            "description": "代码仓库与开源项目。",
-            "url": "https://github.com/foryouos"
+            "name": "微信公众号 · 瓶子的跋涉",
+            "description": "微信搜一搜「瓶子的跋涉」即可关注，也可扫码关注。"
           }
         ]
       }
@@ -139,7 +138,7 @@
   </script>
 
   <!-- ?v= 用于缓存击穿：每次改动样式/脚本后把版本号 +1，避免浏览器/预览拿到旧文件 -->
-  <link rel="stylesheet" href="index.css?v=7">
+  <link rel="stylesheet" href="index.css?v=11">
 </head>
 <body>
 
@@ -486,7 +485,7 @@
     <li><a href="https://analyse.foryouos.cn/">投资分析 · InvestAnalyse</a> — 本地优先的开源投资分析终端，支持持仓总览、组合收益历史、基金与 ETF 成分股穿透、市场数据看板。</li>
     <li><a href="https://www.blog.foryouos.cn/">博客</a> — 编程学习笔记与生活随笔。</li>
     <li><a href="https://www.so.foryouos.cn/">搜索</a> — 自建聚合搜索入口。</li>
-    <li><a href="https://github.com/foryouos">GitHub</a> — 代码仓库与开源项目。</li>
+    <li>微信公众号 — 微信搜一搜「瓶子的跋涉」即可关注，也可扫码关注；代码仓库见页脚 GitHub 地址。</li>
   </ul>
 
   <p>联系方式：<a href="https://github.com/foryouos">github.com/foryouos</a>。
@@ -588,8 +587,9 @@
         <span class="c-host">so.foryouos.cn</span>
       </a>
 
-      <a class="card card-wx" href="https://github.com/foryouos" target="_blank" rel="noopener noreferrer" style="--i:3"
-         aria-describedby="wxTip">
+      <!-- 微信公众号入口：不跳转外部站点，悬浮或点击展开「扫码 / 搜索」导引图 -->
+      <div class="card card-wx" role="button" tabindex="0" style="--i:3"
+           aria-expanded="false" aria-controls="wxTip">
         <span class="orb">
           <!-- 官方微信 logo：双气泡轮廓，眼孔为挖空的透明孔；拆两层以便前绿后灰着色 -->
           <svg class="wx-mark" viewBox="0 0 24 24" aria-hidden="true">
@@ -597,42 +597,16 @@
             <path class="wx-mark-front" d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18z"/>
           </svg>
         </span>
-        <span class="c-name">GitHub</span>
-        <span class="c-host">github.com/foryouos</span>
 
-        <!-- 悬浮显示的公众号导引（触屏设备上由 index.js 改为点击展开） -->
+        <span class="c-name">公众号</span>
+        <span class="c-host">微信搜一搜</span>
+
+        <!-- 悬浮 / 点击展开的导引图（白色的「扫码 · 搜索联合传播样式」） -->
         <span class="wx-pop" id="wxTip" role="tooltip">
-          <span class="wx-logo" aria-hidden="true">
-            <svg viewBox="0 0 38 34">
-              <ellipse cx="13" cy="12.5" rx="12" ry="10.2" fill="#3EB575"/>
-              <path d="M5.6 20.6 L2.4 26 L11.4 22.6 Z" fill="#3EB575"/>
-              <circle cx="9" cy="11.4" r="1.65" fill="#fff"/>
-              <circle cx="17.2" cy="11.4" r="1.65" fill="#fff"/>
-              <ellipse cx="24.4" cy="21.4" rx="10.8" ry="8.8" fill="#D6DDE4" stroke="#fff" stroke-width="1.8"/>
-              <path d="M30.6 28.4 L34 32.6 L26.6 29.9 Z" fill="#D6DDE4"/>
-              <circle cx="21.2" cy="20.2" r="1.45" fill="#fff"/>
-              <circle cx="27.8" cy="20.2" r="1.45" fill="#fff"/>
-            </svg>
-          </span>
-          <span class="wx-title">微信搜一搜</span>
-          <span class="wx-body">
-            <span class="wx-qr">
-              <img src="wechat-qr.png" width="512" height="512" decoding="async"
-                   alt="瓶子的跋涉 微信公众号二维码">
-            </span>
-            <span class="wx-right">
-              <span class="wx-tip">扫码关注，或按名称搜索</span>
-              <span class="wx-btn">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="10.6" cy="10.6" r="6.2" fill="none" stroke="currentColor" stroke-width="2.2"/>
-                  <path d="M15.2 15.2 20.6 20.6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-                </svg>
-                <em>瓶子的跋涉</em>
-              </span>
-            </span>
-          </span>
+          <img class="wx-shot" src="wechat-card.png" width="1000" height="305" decoding="async"
+               alt="微信搜一搜「瓶子的跋涉」：扫码关注，或在微信里按名称搜索">
         </span>
-      </a>
+      </div>
     </nav>
   </main>
 
@@ -652,12 +626,12 @@
       <li><a href="https://analyse.foryouos.cn/">投资分析 · InvestAnalyse</a></li>
       <li><a href="https://www.blog.foryouos.cn/">博客</a></li>
       <li><a href="https://www.so.foryouos.cn/">搜索</a></li>
-      <li><a href="https://github.com/foryouos">GitHub</a></li>
+      <li>微信公众号：微信搜一搜「瓶子的跋涉」</li>
     </ul>
     <p>内容方向：C / C++、Linux、网络编程与后台服务器开发的学习记录。</p>
   </div>
 </noscript>
 
-<script src="index.js?v=7"></script>
+<script src="index.js?v=11"></script>
 </body>
 </html>

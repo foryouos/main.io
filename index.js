@@ -250,7 +250,8 @@
   }
 
   /* ---------------------------------------------------------------
-     6. 微信导引：悬浮由 CSS 处理，触屏设备改为点击展开
+     6. 公众号导引：桌面悬浮由 CSS 处理，点击/键盘用于固定展开
+        卡片不跳转任何外部站点，点击只做开合（disclosure 控件）
      --------------------------------------------------------------- */
   function initWechatTip() {
     var card = document.querySelector('.card-wx');
@@ -258,54 +259,42 @@
 
     var pop = card.querySelector('.wx-pop');
 
-    // 无悬浮能力的设备（触屏/手写笔）默认点击展开，避免浮层永远不可见
-    var noHover = window.matchMedia &&
-      window.matchMedia('(hover: none), (pointer: coarse)').matches;
+    function isOpen() { return card.classList.contains('is-open'); }
 
-    function open() { card.classList.add('is-open'); }
-    function close() { card.classList.remove('is-open'); }
-
-    // 浮层内部只是展示信息（二维码 / 名称），点它不应跳转 GitHub
-    if (pop) {
-      pop.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-      });
+    function setOpen(open) {
+      card.classList.toggle('is-open', open);
+      card.setAttribute('aria-expanded', open ? 'true' : 'false');  // 与 aria-controls 配套
     }
 
-    card.addEventListener('click', function (e) {
-      // 第一次点击只展开浮层，再次点击才真正跳转 GitHub
-      if (card.classList.contains('is-open')) return;
-      if (noHover || !finePointer) {
+    // 浮层内只有一张导引图，点它不应让卡片收起来
+    if (pop) {
+      pop.addEventListener('click', function (e) { e.stopPropagation(); });
+    }
+
+    card.addEventListener('click', function () { setOpen(!isOpen()); });
+
+    // 卡片是 div[role=button]，需自行处理 Enter / Space
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
         e.preventDefault();
-        open();
-        return;
-      }
-      // 桌面端若浮层被键盘/触控板以外的原因打开，同样吞掉这次跳转
-      if (!card.matches(':hover')) {
-        e.preventDefault();
-        open();
+        setOpen(!isOpen());
       }
     });
 
     document.addEventListener('pointerdown', function (e) {
-      if (!card.classList.contains('is-open')) return;
-      if (!card.contains(e.target)) close();
+      if (isOpen() && !card.contains(e.target)) setOpen(false);
     }, { passive: true });
 
     card.addEventListener('focusout', function (e) {
-      if (!card.contains(e.relatedTarget)) close();
+      if (!card.contains(e.relatedTarget)) setOpen(false);
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' || e.key === 'Esc') close();
+      if (e.key === 'Escape' || e.key === 'Esc') setOpen(false);
     });
 
-    // 滚动/换页/再次点击卡片外侧时清除，防止状态残留
-    window.addEventListener('blur', close);
-    card.addEventListener('mouseleave', function () {
-      if (!noHover) close();
-    });
+    // 切到后台/换页时清状态，避免回到页面时浮层残留
+    window.addEventListener('blur', function () { setOpen(false); });
   }
 
   /* ---------------------------------------------------------------
