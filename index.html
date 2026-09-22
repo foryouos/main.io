@@ -49,8 +49,24 @@
   <meta name="baidu-site-verification" content="codeva-7uhuw3rv2I">
   <!-- 其他站长平台验证码（Sogou / 360 / Bing）在这里补 <meta name="..." content="..."> 即可 -->
 
+  <!-- ============ 站点图标（浏览器标签 / 搜索结果 / 移动端主屏） ============ -->
+  <!-- favicon.ico 必须落在站点根目录：站点图标抓取器优先取 /favicon.ico，
+       只声明 SVG 图标时大多会被忽略，搜索结果里就退回默认的「地球」图标。
+       下面按 ICO → PNG(48/96/32/16) → SVG 逐级声明，覆盖全部浏览器。 -->
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="mask-icon" href="mask-icon.svg" color="#FF9418">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="apple-mobile-web-app-title" content="瓶子的跋涉">
+  <meta name="application-name" content="瓶子的跋涉">
+  <meta name="msapplication-config" content="browserconfig.xml">
+  <meta name="msapplication-TileColor" content="#FF9418">
+  <meta name="msapplication-square150x150logo" content="mstile-150x150.png">
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
 
   <!-- ============ 结构化数据：让搜索引擎识别站点实体与导航 ============ -->
@@ -74,6 +90,7 @@
         "name": "foryouos",
         "alternateName": "瓶子的跋涉",
         "url": "https://www.foryouos.cn/",
+        "image": "https://www.foryouos.cn/icon-512.png",
         "description": "编程学习者，方向为 C / C++、Linux、网络编程与后台服务器开发。",
         "knowsAbout": ["C 语言", "C++", "Linux", "网络编程", "TCP/IP", "Socket", "后台服务器开发", "数据结构与算法", "投资分析"],
         "sameAs": [

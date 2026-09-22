@@ -23,15 +23,30 @@
 ## 文件结构
 
 ```
-index.html            # 页面结构 + 内联 SVG 场景
-index.css             # 主题变量、场景动画、单屏布局
-index.js              # 主题切换 / 一言 / 视差 / 涟漪 / viewBox 自适配 / 微信导引
-favicon.svg           # 内联矢量图标（漂流瓶）
-apple-touch-icon.png  # iOS 主屏图标 180×180
-og-cover.png          # 社交分享卡片 1200×630
-wechat-card.png       # 「扫码 · 搜索联合传播样式（白色版）」导引图 1000×280（已裁掉自带白边）
-robots.txt            # 抓取规则
-sitemap.xml           # 站点地图
+index.html              # 页面结构 + 内联 SVG 场景
+index.css               # 主题变量、场景动画、单屏布局
+index.js                # 主题切换 / 一言 / 视差 / 涟漪 / viewBox 自适配 / 微信导引
+og-cover.png            # 社交分享卡片 1200×630
+wechat-card.png         # 「扫码 · 搜索联合传播样式（白色版）」导引图 1000×280（已裁掉自带白边）
+
+# --- 站点图标（详见「站点图标」一节） ---
+favicon.ico             # 16 + 32 + 48 三帧，站点根目录必需
+favicon.svg             # 矢量源，现代浏览器优先取用
+favicon-16x16.png       # 标签页 / 历史记录
+favicon-32x32.png       # 标签页 / 书签
+favicon-48x48.png       # ★ 搜索结果图标的最小可用尺寸
+favicon-96x96.png       # 高分屏 / manifest
+apple-touch-icon.png    # iOS 主屏 180×180（满幅无圆角，iOS 自行裁形）
+mask-icon.svg           # Safari 固定标签页（单色，由 color 属性着色）
+icon-192.png            # PWA / Android 主屏
+icon-512.png            # PWA / Android 主屏（高分屏）
+icon-maskable-512.png   # Android 自适应图标（内容已收进 80% 安全圆）
+mstile-150x150.png      # Windows 开始菜单磁贴
+site.webmanifest        # PWA 清单：名称 / 主题色 / 图标集
+browserconfig.xml       # Windows 磁贴配置
+
+robots.txt              # 抓取规则
+sitemap.xml             # 站点地图
 ```
 
 ## 导航入口
@@ -149,15 +164,44 @@ chrome --headless=new --disable-gpu --no-sandbox --hide-scrollbars \
 | 结构化数据 | `index.html` 内 JSON-LD | `WebSite` + `Person` + `ItemList`（站点导航），帮助搜索与 AI 摘要理解实体 |
 | 标题与摘要 | `<title>` / `description` | 含"C/C++、后台服务器学习记录"等真实内容方向 |
 | 抓取正文 | `.sr-only` 区块 | 视觉隐藏但爬虫与屏幕阅读器可见的正文（h1/h2 + 方向 + 导航），**与页面内容一致，非关键词堆砌** |
-| 社交卡片 | `og-cover.png` 1200×630 | og:image / twitter:image，另作 apple-touch-icon |
+| 社交卡片 | `og-cover.png` 1200×630 | og:image / twitter:image |
+| 站点图标 | `favicon.ico` + 6 个 PNG + `site.webmanifest` | 标签页、书签、**搜索结果**、移动端主屏 —— 见下节 |
 | 无 JS 降级 | `<noscript>` | 未启用 JS 时输出可读正文与全部链接 |
 | 重复内容防护 | `<link rel="canonical">` | `?theme=night` 等带参地址统一指向首页 |
 
 > `.sr-only` 是「隐藏文本」的合规用法：内容真实描述页面、屏幕阅读器可读。若日后把这段内容改成视觉可见的独立区块（例如折叠面板），SEO 权重会更高。
 
+### 站点图标（浏览器与搜索引擎的「标注文件」）
+
+**症状**：搜索结果里站点名左侧显示默认的**灰色地球**，而不是本站图标。
+
+**根因**：`<head>` 里只声明了 `type="image/svg+xml"` 的 favicon。图标抓取器只认 `favicon.ico` 与**位图**（PNG），且要求尺寸是 48×48 的整数倍；只给 SVG 时它取不到任何可用资源，于是退回占位地球。
+
+**修复**：在站点根目录补齐 `favicon.ico`（16/32/48 三帧）+ 位图 PNG，并在 `<head>` 里逐级声明：
+
+| 声明 | 作用域 |
+| --- | --- |
+| `rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48"` | 兜底；抓取器会直接请求 `/favicon.ico` |
+| `rel="icon" type="image/png" sizes="48x48"` | **搜索结果图标**（48 的整数倍，48 / 96 均可） |
+| `rel="icon" type="image/png" sizes="16x16"` / `32x32` | 标签页、书签、历史记录 |
+| `rel="icon" type="image/svg+xml"` | 现代浏览器的矢量优先项 |
+| `rel="apple-touch-icon" sizes="180x180"` | iOS 添加到主屏 |
+| `rel="mask-icon" color="#FF9418"` | Safari 固定标签页 |
+| `rel="manifest"` + `browserconfig.xml` | Android 主屏 / Windows 磁贴 |
+
+三条硬性要求，缺一条图标仍会被忽略：
+
+1. **`favicon.ico` 必须在站点根目录**，且 `robots.txt` 不得屏蔽它 —— 抓取器按 `/favicon.ico` 这个固定路径去取。
+2. **尺寸为 48×48 的整数倍、正方形、同域可直接访问**（不能挂到另一个域名的图床/CDN 上）。
+3. **换图标后要主动触发重新抓取**（Search Console「网址检查」→ 请求编入索引）。搜索引擎侧的图标缓存刷新**通常滞后数天到数周**，不是改完即刻生效。
+
+> **生成方式**：`favicon.svg` 经无头 Chrome 渲染成 1024×1024 透明母图，再 LANCZOS 逐级降采样；16/32/48 追加一道轻度 USM 锐化，最后手工拼装 ICO 容器（免得 PIL 从单张源图重新缩放、丢掉锐化结果，也便于确认三帧尺寸）。`icon-maskable-512.png` 是**单独一版**：满幅渐变底 + 抠出的瓶子按 80% 安全圆缩放居中。
+>
+> **两个坑**：① Chrome 无头截图的布局视口有约 500px 下限，`--window-size=16,16` 只会截到大图的左上角 —— 必须先渲染大图再降采样。② 别直接拿方形图标当 maskable，启动器的圆形遮罩会把瓶底切掉。
+
 ### 部署后要做的事（一次性）
 
-1. **Google Search Console** — 添加资源 `https://www.foryouos.cn/`，验证（已有 `google-site-verification` meta），提交 `sitemap.xml`，用"网址检查"请求编入索引。
+1. **Google Search Console** — 添加资源 `https://www.foryouos.cn/`，验证（已有 `google-site-verification` meta），提交 `sitemap.xml`，用"网址检查"请求编入索引。**换过图标后要再抓一次**，并接受图标缓存有数天到数周的延迟。
 2. **Bing Webmaster Tools** — 支持从 GSC 直接导入；`bingbot` 已在 robots 中放行。
 3. **百度搜索资源平台** — 验证（已有 `baidu-site-verification` meta），提交 `sitemap.xml` 或使用普通收录 API 推送首页。
 4. **搜狗 / 360 站长平台** — 在 `<head>` 的注释位置补各自的验证 meta。
