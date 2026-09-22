@@ -684,6 +684,8 @@ html[data-theme="night"] .tb-orb { transform: translateX(100%); }
               background-color 1.1s ease, color 1.1s ease;
 }
 .orb svg { width: 46%; height: 46%; display: block; }
+/* 微信双气泡图标在 24 视口内留白较多，单独放大到与其余三枚图标等重 */
+.card-wx .orb svg { width: 50%; height: 50%; }
 
 .card:hover .orb,
 .card:focus-visible .orb {
