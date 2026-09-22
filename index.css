@@ -38,10 +38,9 @@
   --shadow:       0 12px 30px rgba(140, 88, 8, .18);
   --slide:        0;
 
-  /* 公众号导引浮层：沿用「白色版」联合传播样式，昼夜都保持浅底以利扫码 */
+  /* 公众号导引云朵：沿用「白色版」联合传播样式，昼夜都保持白底以利扫码 */
   --wx-green:     #07C160;
-  --wx-border:    rgba(74, 53, 32, .10);
-  --wx-shadow:    0 18px 40px rgba(120, 70, 10, .24);
+  --wx-shadow:    0 16px 30px rgba(120, 70, 10, .26);
 }
 
 html[data-theme="night"] {
@@ -70,6 +69,7 @@ html[data-theme="night"] {
   --foam:         #BFE0EE;
   --lh-rock:      #0B2A3B;
   --shadow:       0 14px 34px rgba(0, 0, 0, .42);
+  --wx-shadow:    0 16px 32px rgba(0, 0, 0, .48);
 }
 
 /* ---------- 基础 ---------- */
@@ -701,64 +701,97 @@ html[data-theme="night"] .card-wx .orb .wx-mark-back { fill: #C9D4DE; }
   transition: color 1.1s ease;
 }
 
-/* ---- 公众号卡片：悬浮 / 点击展开「扫码 · 搜索」导引图 ---- */
-.card-wx { position: relative; cursor: pointer; }
+/* ---- 公众号卡片：悬浮 / 点击展开「扫码 · 搜索」导引图（云朵形态浮出） ---- */
+.card-wx {
+  position: relative;
+  cursor: pointer;
+  /* 云朵向右让出天空。网格是定宽居中的，所以「卡片右缘 → 右侧安全边」的距离只取决于视口宽度：
+       (100vw - 44rem) / 2 - frame 的左右内边距
+     frame 的内边距是 clamp(16px, 3.4vw, 48px)，这里按 3.4vw 估算并再留 6px 余量。
+     窄屏时该值为负，被 max() 收成 0，云朵自动退回「右对齐卡片」的老行为。 */
+  --wx-shift: max(0px, calc((100vw - 44rem) / 2 - 3.4vw - 6px));
+  /* 云朵相对浮层外扩的量：上方要留出鼓包，两侧只留一点 */
+  --wx-lift: 44px;
+  --wx-side: 10px;
+}
 
 .card-wx:focus-visible { outline: 2.5px solid var(--wx-green); outline-offset: 5px; }
 
 .wx-pop {
   position: absolute;
-  /* 右对齐到卡片：卡片恒在网格最右列，因此浮层永远不会越出视口右缘。
-     不要用 position:fixed 去贴合视口——卡片带着 fade-up 动画的残留 transform，
+  /* 不要用 position:fixed 去贴合视口——卡片带着 fade-up 动画的残留 transform，
      会为 fixed 后代创建包含块，浮层会跑偏。 */
   left: auto;
-  right: 0;
-  bottom: calc(100% + 11px);
-  /* 宽度不变，8px padding 让导引图四周得到均匀留白（图片本身已裁掉自带白边） */
-  width: min(400px, calc(100vw - 28px));
-  padding: 8px;
-  border-radius: 14px;
-  /* 导引图是「白色版」联合传播样式，昼夜都保持浅底，否则二维码扫不出来 */
-  background: #FFFFFF;
-  box-shadow: var(--wx-shadow);
+  right: calc(-1 * var(--wx-shift));
+  bottom: calc(100% + 14px);
+  /* 内边距即导引图四周的留白，由云朵本体供给（云朵远大于图片，边缘绝不会切到内容） */
+  width: min(432px, calc(100vw - 28px));
+  padding: 26px;
+  /* 云朵是「圆角主体 + 多个鼓包」的并集，形状与阴影全交给 .wx-cloud，
+     这里不能再有 background / border-radius / box-shadow，否则会露出白矩形 */
+  background: none;
+  box-shadow: none;
   text-align: left;
   z-index: 5;
 
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(8px) scale(.96);
-  transform-origin: 100% 100%;
-  transition: opacity .26s ease,
-              transform .34s cubic-bezier(.2, .85, .25, 1),
-              visibility .26s;
+  transform: translateY(14px) scale(.97);
+  transform-origin: 50% 100%;
+  transition: opacity .28s ease,
+              transform .38s cubic-bezier(.2, .85, .25, 1),
+              visibility .28s;
 }
 
-/* 导引图铺满浮层内容区，内圆角比面板小一个 padding 的差值，视觉上同心 */
-.wx-shot { display: block; width: 100%; height: auto; border-radius: 7px; }
+/* ---- 云朵本体 ----
+   构造与背景云同源：一个圆角主体 + 若干鼓包，靠同一个 fill 的并集成云。
+   参考框 1000×447 与实际云盒（452×202）同比，故 preserveAspectRatio="none" 几乎无形变。
+   填充必须与导引图底色（纯白）完全一致 —— 图片的直角边才会彻底隐形。 */
+.wx-cloud {
+  position: absolute;
+  left: calc(-1 * var(--wx-side));
+  top: calc(-1 * var(--wx-lift));
+  /* 宽高都必须显式给。SVG 是替换元素：只写 inset 时它内在的宽高比会参与求解，
+     要么否决 bottom（云朵下沿压住卡片），要么反过来按高度定出宽度（云朵被压窄、
+     右侧漏出图片直角边）。两个都写死，再配合 preserveAspectRatio="none" 拉伸。 */
+  width: calc(100% + var(--wx-side) * 2);
+  height: calc(100% + var(--wx-lift));
+  right: auto;
+  bottom: auto;
+  pointer-events: none;
+  filter: drop-shadow(var(--wx-shadow));
+  animation: cloud-bob 9s ease-in-out infinite;
+}
+.wx-cloud-fill { fill: #FFFFFF; }
 
-/* 透明「接桥」：填满浮层与卡片之间的空隙，避免指针移向二维码时浮层因失焦而消失 */
+/* 极缓的上下浮动：云朵在呼吸，读码时也不干扰（振幅仅 ±3.5px） */
+@keyframes cloud-bob {
+  0%, 100% { transform: translateY(-3.5px); }
+  50%      { transform: translateY(3.5px); }
+}
+
+html[data-theme="night"] .wx-cloud {
+  /* 夜间：外圈加一层月光晕，让它像被月亮照亮的云，而不是贴上去的白块 */
+  filter: drop-shadow(0 0 24px rgba(184, 216, 255, .30)) drop-shadow(var(--wx-shadow));
+}
+
+/* 导引图铺满云朵的内容区。刻意不给圆角：图片自身四角是纯白，与云朵底色一致，
+   直角边完全隐形；若加圆角反而会在四角漏出天空。
+   必须 position+z-index：云朵带 filter（会创建层叠上下文），若不显式抬高层级，
+   绝对定位的云朵会盖在静态 <img> 之上，把导引图整块吃掉。 */
+.wx-shot { display: block; position: relative; z-index: 1;
+           width: 100%; height: auto; border-radius: 0; }
+
+/* 透明「接桥」：填满云朵与卡片之间的空隙，避免指针移向二维码时浮层因失焦而消失。
+   高度略大于 14px 间隙，确保指针跨越时不出现真空带。 */
 .wx-pop::before {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
   top: 100%;
-  height: 14px;
-}
-
-/* 指向下方卡片的小尖角：偏移取卡片半宽，使尖角落回卡片中心附近
-   （卡片宽 124–178px，故 66px 在各类断点下都落在卡片范围内） */
-.wx-pop::after {
-  content: "";
-  position: absolute;
-  left: auto;
-  right: 66px;
-  bottom: -6.5px;
-  width: 13px;
-  height: 13px;
-  background: #FFFFFF;
-  transform: rotate(45deg);
+  height: 22px;
 }
 
 .card-wx:hover .wx-pop,
@@ -860,6 +893,9 @@ html[data-theme="night"] .card-wx .orb .wx-mark-back { fill: #C9D4DE; }
   .stage   { gap: clamp(8px, 1.8vmin, 18px); }
   .orb     { width: clamp(44px, 12vmin, 64px); }
   .quote   { padding-top: 8px; padding-bottom: 8px; }
+  /* 竖向空间紧张时收一收云朵，避免顶到标题 */
+  .card-wx  { --wx-lift: 32px; }
+  .wx-pop   { padding: 18px; }
 }
 
 @media (max-width: 620px) {
@@ -868,9 +904,12 @@ html[data-theme="night"] .card-wx .orb .wx-mark-back { fill: #C9D4DE; }
   .quote  { border-radius: 26px; }
   .tagline span:nth-child(5) { display: none; }
 
-  /* 定位与尖角已按「右对齐卡片」统一处理；窄屏卡片紧贴视口右缘，
-     再留出 6px 内缩，避免浮层看起来贴边 */
-  .wx-pop { right: 6px; width: min(400px, calc(100vw - 26px)); }
+  /* 窄屏时 --wx-shift 已被 max() 收成 0，云朵退回右对齐卡片；
+     卡片紧贴视口右缘，故收小云朵外扩并给浮层留足内缩，避免云朵挨到屏幕边。 */
+  .card-wx { --wx-lift: 36px; --wx-side: 4px; }
+  /* padding 用 24px 而非 20px：云盒被竖向压扁后，主体圆角对图片角点的余量会变小，
+     20px 时只剩 ~3px，±3.5px 的浮动就可能把图片直角边露出来 */
+  .wx-pop { right: 12px; width: min(432px, calc(100vw - 26px)); padding: 24px; }
 }
 
 @media (max-width: 380px) {
@@ -913,4 +952,5 @@ html[data-theme="night"] .card-wx .orb .wx-mark-back { fill: #C9D4DE; }
   .boat-bob { animation-duration: 8.4s !important; }
   .bottle-drift { animation-duration: 34s !important; }
   .bottle-move { animation-duration: 6.8s !important; }
+  .wx-cloud { animation-duration: 14s !important; }
 }

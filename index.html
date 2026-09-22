@@ -138,7 +138,7 @@
   </script>
 
   <!-- ?v= 用于缓存击穿：每次改动样式/脚本后把版本号 +1，避免浏览器/预览拿到旧文件 -->
-  <link rel="stylesheet" href="index.css?v=12">
+  <link rel="stylesheet" href="index.css?v=13">
 </head>
 <body>
 
@@ -601,8 +601,22 @@
         <span class="c-name">公众号</span>
         <span class="c-host">瓶子的跋涉</span>
 
-        <!-- 悬浮 / 点击展开的导引图（白色的「扫码 · 搜索联合传播样式」） -->
+        <!-- 悬浮 / 点击展开的导引图（白色的「扫码 · 搜索联合传播样式」），以云朵形态浮出 -->
         <span class="wx-pop" id="wxTip" role="tooltip">
+          <!-- 云朵本体：一个圆角主体 + 五个鼓包，同一 fill 的并集即为轮廓。
+               参考框 1000×447 与实际云盒（452×202）同比，preserveAspectRatio="none" 几乎不形变。
+               主体下沿就是参考框下沿 —— 底部不要再叠椭圆，否则会比主体更宽、形成台阶。 -->
+          <svg class="wx-cloud" viewBox="0 0 1000 447" preserveAspectRatio="none"
+               aria-hidden="true" focusable="false">
+            <g class="wx-cloud-fill">
+              <rect x="22" y="97" width="956" height="350" rx="120"/>
+              <ellipse cx="200" cy="150" rx="210" ry="150"/>
+              <ellipse cx="520" cy="140" rx="215" ry="140"/>
+              <ellipse cx="815" cy="165" rx="185" ry="165"/>
+              <ellipse cx="70"  cy="300" rx="70"  ry="125"/>
+              <ellipse cx="930" cy="300" rx="70"  ry="125"/>
+            </g>
+          </svg>
           <img class="wx-shot" src="wechat-card.png" width="1000" height="280" decoding="async"
                alt="微信搜一搜「瓶子的跋涉」：扫码关注，或在微信里按名称搜索">
         </span>
@@ -632,6 +646,6 @@
   </div>
 </noscript>
 
-<script src="index.js?v=12"></script>
+<script src="index.js?v=13"></script>
 </body>
 </html>
