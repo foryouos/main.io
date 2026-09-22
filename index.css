@@ -714,7 +714,9 @@ html[data-theme="night"] .card-wx .orb .wx-mark-back { fill: #C9D4DE; }
   left: auto;
   right: 0;
   bottom: calc(100% + 11px);
+  /* 宽度不变，8px padding 让导引图四周得到均匀留白（图片本身已裁掉自带白边） */
   width: min(400px, calc(100vw - 28px));
+  padding: 8px;
   border-radius: 14px;
   /* 导引图是「白色版」联合传播样式，昼夜都保持浅底，否则二维码扫不出来 */
   background: #FFFFFF;
@@ -732,8 +734,8 @@ html[data-theme="night"] .card-wx .orb .wx-mark-back { fill: #C9D4DE; }
               visibility .26s;
 }
 
-/* 导引图铺满整个浮层 */
-.wx-shot { display: block; width: 100%; height: auto; border-radius: 14px; }
+/* 导引图铺满浮层内容区，内圆角比面板小一个 padding 的差值，视觉上同心 */
+.wx-shot { display: block; width: 100%; height: auto; border-radius: 7px; }
 
 /* 透明「接桥」：填满浮层与卡片之间的空隙，避免指针移向二维码时浮层因失焦而消失 */
 .wx-pop::before {
