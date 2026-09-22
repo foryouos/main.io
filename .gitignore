@@ -10,3 +10,6 @@ desktop.ini
 
 # 工具工作目录（含本地路径与工作笔记，不随站点发布）
 .workbuddy/
+
+# 本地视觉自检用的临时预览页（由 _preview.html 强制展开浮层生成）
+_preview.html

@@ -250,7 +250,66 @@
   }
 
   /* ---------------------------------------------------------------
-     6. 杂项
+     6. 微信导引：悬浮由 CSS 处理，触屏设备改为点击展开
+     --------------------------------------------------------------- */
+  function initWechatTip() {
+    var card = document.querySelector('.card-wx');
+    if (!card) return;
+
+    var pop = card.querySelector('.wx-pop');
+
+    // 无悬浮能力的设备（触屏/手写笔）默认点击展开，避免浮层永远不可见
+    var noHover = window.matchMedia &&
+      window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+    function open() { card.classList.add('is-open'); }
+    function close() { card.classList.remove('is-open'); }
+
+    // 浮层内部只是展示信息（二维码 / 名称），点它不应跳转 GitHub
+    if (pop) {
+      pop.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    }
+
+    card.addEventListener('click', function (e) {
+      // 第一次点击只展开浮层，再次点击才真正跳转 GitHub
+      if (card.classList.contains('is-open')) return;
+      if (noHover || !finePointer) {
+        e.preventDefault();
+        open();
+        return;
+      }
+      // 桌面端若浮层被键盘/触控板以外的原因打开，同样吞掉这次跳转
+      if (!card.matches(':hover')) {
+        e.preventDefault();
+        open();
+      }
+    });
+
+    document.addEventListener('pointerdown', function (e) {
+      if (!card.classList.contains('is-open')) return;
+      if (!card.contains(e.target)) close();
+    }, { passive: true });
+
+    card.addEventListener('focusout', function (e) {
+      if (!card.contains(e.relatedTarget)) close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') close();
+    });
+
+    // 滚动/换页/再次点击卡片外侧时清除，防止状态残留
+    window.addEventListener('blur', close);
+    card.addEventListener('mouseleave', function () {
+      if (!noHover) close();
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     7. 杂项
      --------------------------------------------------------------- */
   function initMisc() {
     var yearEl = document.getElementById('year');
@@ -271,6 +330,7 @@
     initQuote();
     initParallax();
     initRipple();
+    initWechatTip();
     initMisc();
   }
 

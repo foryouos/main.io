@@ -23,10 +23,15 @@
 ## 文件结构
 
 ```
-index.html      # 页面结构 + 内联 SVG 场景
-index.css       # 主题变量、场景动画、单屏布局
-index.js        # 主题切换 / 一言 / 视差 / 涟漪 / viewBox 自适配
-favicon.svg     # 内联矢量图标（漂流瓶）
+index.html            # 页面结构 + 内联 SVG 场景
+index.css             # 主题变量、场景动画、单屏布局
+index.js              # 主题切换 / 一言 / 视差 / 涟漪 / viewBox 自适配 / 微信导引
+favicon.svg           # 内联矢量图标（漂流瓶）
+apple-touch-icon.png  # iOS 主屏图标 180×180
+og-cover.png          # 社交分享卡片 1200×630
+wechat-qr.png         # 微信公众号二维码 512×512（GitHub 卡片悬浮导引用）
+robots.txt            # 抓取规则
+sitemap.xml           # 站点地图
 ```
 
 ## 导航入口
@@ -38,6 +43,23 @@ favicon.svg     # 内联矢量图标（漂流瓶）
 | 搜索 | https://www.so.foryouos.cn/ |
 | GitHub | https://github.com/foryouos |
 
+### GitHub 卡片的公众号导引
+
+GitHub 卡片（`.card-wx`）上挂了一层 `.wx-pop` 浮层，鼠标悬浮即展开，内容为「微信搜一搜 · 瓶子的跋涉」+ 二维码，方便访客扫码或按名称搜索关注。
+
+| 交互 | 行为 |
+| --- | --- |
+| 桌面端悬浮 | CSS `:hover` / `:focus-visible` 展开，`0.34s` 缓动淡入上浮 |
+| 桌面端点击 | 直接跳转 GitHub（悬浮态不拦截），浮层仅作提示 |
+| 触屏 / 触控笔 | JS 判定 `(hover: none), (pointer: coarse)`，首次点击只展开浮层，再次点击卡片才跳转 |
+| 关闭 | 点击卡片外部、`Escape`、`focusout`、窗口失焦 |
+| 浮层内部 | 点击二维码等区域被 `preventDefault()` 拦截，不会误触跳转 |
+
+两个关键实现细节：
+
+- **透明接桥**：`.wx-pop::before` 是一段 14px 高的透明区域，填满浮层与卡片之间的空隙。否则指针从卡片移向二维码时会经过"真空带"，`hover` 断掉、浮层消失。
+- **二维码固定白底**：`.wx-qr` 在夜间也强制 `background:#FFFFFF`，深色主题下二维码仍可被扫出。
+
 ## 本地预览
 
 ```bash
@@ -46,6 +68,21 @@ favicon.svg     # 内联矢量图标（漂流瓶）
 python -m http.server 8080
 # 打开 http://localhost:8080
 ```
+
+### 无头截图自检（改完动效/浮层后可跑）
+
+Chrome 的 `--headless=new` 在本机可用，配合 `?theme=day|night` 可直接出图核对：
+
+```bash
+chrome --headless=new --disable-gpu --no-sandbox --hide-scrollbars \
+  --virtual-time-budget=5000 --window-size=1440,900 \
+  --screenshot=shot.png "file:///E:/Foryouos/main.io/index.html?theme=night"
+```
+
+两个坑：
+
+1. **预览页必须放在仓库目录内**。放到临时目录时相对引用的 `index.css` 会 404，SVG 里靠 CSS 上色的云、山、海浪会全部退回黑色（内联渐变填色的星月仍正常），很容易误判成"样式炸了"。
+2. **悬浮态截不到**。需要额外注入一段 `!important` 强制展开 `.wx-pop` 的 `<style>`，生成 `_preview.html` 后再截图（该文件已加入 `.gitignore`）。
 
 ## 部署到 Cloudflare Pages
 

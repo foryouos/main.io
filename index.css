@@ -37,6 +37,14 @@
   --lh-rock:      #4A7382;
   --shadow:       0 12px 30px rgba(140, 88, 8, .18);
   --slide:        0;
+
+  /* 公众号导引浮层 */
+  --wx-bg:        #FFFFFF;
+  --wx-border:    rgba(74, 53, 32, .10);
+  --wx-title:     #2B2118;
+  --wx-sub:       #8A7048;
+  --wx-green:     #07C160;
+  --wx-shadow:    0 18px 40px rgba(120, 70, 10, .24);
 }
 
 html[data-theme="night"] {
@@ -65,6 +73,12 @@ html[data-theme="night"] {
   --foam:         #BFE0EE;
   --lh-rock:      #0B2A3B;
   --shadow:       0 14px 34px rgba(0, 0, 0, .42);
+
+  --wx-bg:        #10263A;
+  --wx-border:    rgba(255, 255, 255, .14);
+  --wx-title:     #F2EADA;
+  --wx-sub:       #9FB6CA;
+  --wx-shadow:    0 18px 40px rgba(0, 0, 0, .55);
 }
 
 /* ---------- 基础 ---------- */
@@ -691,6 +705,132 @@ html[data-theme="night"] .tb-orb { transform: translateX(100%); }
   transition: color 1.1s ease;
 }
 
+/* ---- GitHub 卡片：微信搜一搜浮动导引 ---- */
+.card-wx { position: relative; }
+
+.wx-pop {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 11px);
+  width: min(322px, 80vw);
+  padding: 13px 14px 14px;
+  border-radius: 15px;
+  background: var(--wx-bg);
+  border: 1px solid var(--wx-border);
+  box-shadow: var(--wx-shadow);
+  text-align: left;
+  z-index: 5;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, 8px) scale(.96);
+  transform-origin: 50% 100%;
+  transition: opacity .26s ease,
+              transform .34s cubic-bezier(.2, .85, .25, 1),
+              visibility .26s,
+              background-color 1.1s ease,
+              border-color 1.1s ease;
+}
+
+/* 透明「接桥」：填满浮层与卡片之间的空隙，避免指针移向二维码时浮层因失焦而消失 */
+.wx-pop::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 14px;
+}
+
+/* 指向下方图标的小尖角 */
+.wx-pop::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6.5px;
+  width: 13px;
+  height: 13px;
+  background: inherit;
+  border-right: 1px solid var(--wx-border);
+  border-bottom: 1px solid var(--wx-border);
+  transform: translateX(-50%) rotate(45deg);
+  transition: background-color 1.1s ease, border-color 1.1s ease;
+}
+
+.card-wx:hover .wx-pop,
+.card-wx:focus-visible .wx-pop,
+.card-wx.is-open .wx-pop {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, 0) scale(1);
+}
+
+.wx-logo {
+  display: inline-block;
+  width: 23px;
+  height: 21px;
+  margin-right: 7px;
+  vertical-align: -4px;
+}
+.wx-logo svg { width: 100%; height: 100%; display: block; }
+
+.wx-title {
+  font-size: clamp(.86rem, 1.7vmin, .96rem);
+  font-weight: 700;
+  color: var(--wx-title);
+  letter-spacing: .05em;
+  transition: color 1.1s ease;
+}
+
+.wx-body {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 10px;
+}
+
+.wx-qr {
+  flex: none;
+  width: 96px;
+  height: 96px;
+  padding: 4px;
+  border-radius: 11px;
+  /* 二维码必须保持浅底才能被扫出，夜间也固定白底 */
+  background: #FFFFFF;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .07), 0 2px 8px rgba(0, 0, 0, .06);
+}
+.wx-qr img { display: block; width: 100%; height: 100%; border-radius: 4px; }
+
+.wx-right { display: grid; gap: 9px; min-width: 0; }
+
+.wx-tip {
+  font-size: clamp(.6rem, 1.2vmin, .68rem);
+  line-height: 1.45;
+  color: var(--wx-sub);
+  transition: color 1.1s ease;
+}
+
+.wx-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  border-radius: 9px;
+  background: var(--wx-green);
+  color: #FFFFFF;
+  font-size: clamp(.78rem, 1.55vmin, .88rem);
+  font-weight: 600;
+  letter-spacing: .04em;
+  box-shadow: 0 5px 14px rgba(7, 193, 96, .32);
+  transition: transform .3s cubic-bezier(.2, .85, .25, 1), box-shadow .3s ease;
+}
+.wx-btn svg { width: 15px; height: 15px; flex: none; }
+.wx-btn em { font-style: normal; }
+
+.card-wx:hover .wx-btn { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(7, 193, 96, .4); }
+
 /* ---- 页脚 ---- */
 .foot {
   display: flex;
@@ -788,6 +928,20 @@ html[data-theme="night"] .tb-orb { transform: translateX(100%); }
   .links  { width: 96vw; gap: clamp(6px, 2.4vw, 14px); }
   .quote  { border-radius: 26px; }
   .tagline span:nth-child(5) { display: none; }
+
+  /* GitHub 卡在最右侧，浮层改为右对齐并收窄，避免越出屏幕 */
+  .wx-pop {
+    left: auto;
+    right: -6px;
+    width: min(300px, 86vw);
+    transform: translateY(8px) scale(.96);
+    transform-origin: 100% 100%;
+  }
+  .card-wx:hover .wx-pop,
+  .card-wx:focus-visible .wx-pop,
+  .card-wx.is-open .wx-pop { transform: translateY(0) scale(1); }
+  .wx-pop::after { left: auto; right: 30px; transform: rotate(45deg); }
+  .wx-qr { width: 86px; height: 86px; }
 }
 
 @media (max-width: 380px) {
