@@ -684,8 +684,11 @@ html[data-theme="night"] .tb-orb { transform: translateX(100%); }
               background-color 1.1s ease, color 1.1s ease;
 }
 .orb svg { width: 46%; height: 46%; display: block; }
-/* 微信双气泡图标在 24 视口内留白较多，单独放大到与其余三枚图标等重 */
-.card-wx .orb svg { width: 50%; height: 50%; }
+/* 官方微信 logo 是 24×18.9 的宽扁形，故按宽度对齐其余图标，并单独着色（前绿后灰） */
+.card-wx .orb svg { width: 44%; height: 44%; }
+.card-wx .orb .wx-mark-front { fill: #07C160; }
+.card-wx .orb .wx-mark-back  { fill: #D3DBE3; }
+html[data-theme="night"] .card-wx .orb .wx-mark-back { fill: #C9D4DE; }
 
 .card:hover .orb,
 .card:focus-visible .orb {
