@@ -47,6 +47,7 @@ browserconfig.xml       # Windows 磁贴配置
 
 robots.txt              # 抓取规则
 sitemap.xml             # 站点地图
+404.html                # 真实 404 页 —— 必须在根目录，否则 CF Pages 会启用 SPA 回退（见下）
 ```
 
 ## 导航入口
@@ -153,6 +154,26 @@ chrome --headless=new --disable-gpu --no-sandbox --hide-scrollbars \
 
 > 纯静态、无构建步骤，也可以用 `wrangler pages deploy .` 直接上传，或继续使用 GitHub Pages（Settings → Pages → Deploy from branch → root）。
 
+### ⚠️ 必须保留 `404.html`（否则全站「软 404」）
+
+Cloudflare Pages 有个容易踩的默认行为：**项目根目录如果没有 `404.html`，Pages 会认定你在部署单页应用（SPA），把任何找不到的路径都回退到 `/`，并以 `200` 返回首页 HTML。**
+
+由此产生两个后果：
+
+1. **提交站点地图会失败，且报错误导**。若在 GSC 里把路径填错（例如填了 `sitemap` 少了 `.xml`、填了 `sitemap_index.xml`、或直接粘了首页地址），Pages 不会回 `404`，而是回首页 HTML。Google 于是报 **「Sitemap 为 HTML 檔案 / 第 2 行 標記：html」** —— 因为 `index.html` 第 2 行正是 `<html lang="zh-CN" …>`。报错信息指向的是首页，极易被误判成站点地图本身写坏了。
+2. **无限「软 404」**。任意乱码路径都以 `200` 返回同一份首页，等于向爬虫声明"这些 URL 都存在"，浪费抓取预算，也稀释页面质量信号。
+
+修复方式就是**在项目根目录放一个 `404.html`**：Pages 检测到它即关闭 SPA 回退，改为返回真实 `404` 状态码 + 该页内容。本站**没有任何客户端路由**（`index.js` 中 `pushState` / `hashchange` / `pathname` 计数均为 0），不存在需要回退的场景，加上只会更好。
+
+本项目 `404.html` 的几个约束：
+
+- **不依赖 JS、不依赖 `index.css`**：只用 `prefers-color-scheme` 做昼夜适配，任何情况下都能渲染。
+- **所有资源引用一律绝对路径**：Pages 会用**原始 URL**（可能是 `/foo/bar` 这类深层路径）渲染 404 页，相对路径会解析到错误位置。
+- **`noindex,follow`**：自身不进索引，但保留链接让爬虫走回首页。
+- 视觉与首页一致（同一只漂流瓶、同一套暖橙/深海配色），并给出回首页与外站导航。
+
+> **验证方法**：部署后访问 `https://www.foryouos.cn/no-such-page`，应返回 **404** 而非 200：`curl -sI https://www.foryouos.cn/no-such-page | head -1`
+
 ## SEO / 搜索引擎索引
 
 已内置以下内容，**部署后无需额外配置即被抓取**：
@@ -161,6 +182,7 @@ chrome --headless=new --disable-gpu --no-sandbox --hide-scrollbars \
 | --- | --- | --- |
 | 站点地图 | `sitemap.xml` | 首页 1 条，`lastmod` 记得随手更新 |
 | 抓取规则 | `robots.txt` | 全站放行，逐一列出 Google / 百度 / Bing / 搜狗 / 360，并声明 sitemap |
+| 404 处理 | `404.html` | 关闭 CF Pages 的 SPA 回退，返回真实 404（见「部署」一节） |
 | 结构化数据 | `index.html` 内 JSON-LD | `WebSite` + `Person` + `ItemList`（站点导航），帮助搜索与 AI 摘要理解实体 |
 | 标题与摘要 | `<title>` / `description` | 含"C/C++、后台服务器学习记录"等真实内容方向 |
 | 抓取正文 | `.sr-only` 区块 | 视觉隐藏但爬虫与屏幕阅读器可见的正文（h1/h2 + 方向 + 导航），**与页面内容一致，非关键词堆砌** |
@@ -202,6 +224,8 @@ chrome --headless=new --disable-gpu --no-sandbox --hide-scrollbars \
 ### 部署后要做的事（一次性）
 
 1. **Google Search Console** — 添加资源 `https://www.foryouos.cn/`，验证（已有 `google-site-verification` meta），提交 `sitemap.xml`，用"网址检查"请求编入索引。**换过图标后要再抓一次**，并接受图标缓存有数天到数周的延迟。
+   - 提交框里**填路径 `sitemap.xml` 即可**，不要粘首页地址、也不要写成 `sitemap_index.xml`。
+   - 若报 **「Sitemap 为 HTML 檔案 / 第 2 行 標記：html」**，即命中了上一节的 SPA 回退陷阱：先确认根目录有 `404.html` 并已部署，再删掉那条错误记录重新提交。
 2. **Bing Webmaster Tools** — 支持从 GSC 直接导入；`bingbot` 已在 robots 中放行。
 3. **百度搜索资源平台** — 验证（已有 `baidu-site-verification` meta），提交 `sitemap.xml` 或使用普通收录 API 推送首页。
 4. **搜狗 / 360 站长平台** — 在 `<head>` 的注释位置补各自的验证 meta。

@@ -14,3 +14,11 @@ desktop.ini
 # 本地视觉自检用的临时产物（强制展开浮层的预览页、校验/探针脚本、截图输出、DOM 转储）
 # 站点正式文件均不以 "_" 开头，故统一用通配收口，避免脚本越攒越多。
 _*
+
+# 例外：Cloudflare Pages / Workers 的特殊文件恰好也以 "_" 开头，必须能被提交，
+# 否则会静默漏掉重定向、响应头、路由与中间件配置。
+!_redirects
+!_headers
+!_routes.json
+!_worker.js
+!_middleware.js

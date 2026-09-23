@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 · 这只瓶子漂丢了 | 瓶子的跋涉</title>
+<meta name="description" content="没有找到你要的页面。回到「瓶子的跋涉」首页。">
+<!-- 404 页不应被索引。follow 保留，让爬虫仍能顺着链接回到首页。
+     注意：这个文件的存在本身就是关键 —— Cloudflare Pages 只有在项目根目录「没有」404.html 时
+     才会启用「SPA 回退」（把任何找不到的路径都当 200 返回 index.html）。
+     缺了它，/sitemap、/sitemap_index.xml 之类的错路径都会返回首页 HTML，
+     搜索引擎提交站点地图时就会报「Sitemap 为 HTML 文件」。 -->
+<meta name="robots" content="noindex,follow">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#FFF6E2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E2745" media="(prefers-color-scheme: dark)">
+<style>
+  /* 纯 CSS 昼夜适配：不依赖 JS，也不依赖 index.css（404 页可能在任意层级路径下被渲染，
+     所以所有资源引用一律用绝对路径，避免 /foo/bar 这类深层路径下相对路径失效）。 */
+  :root {
+    --bg-1: #FFF9EC; --bg-2: #FFE7B8;
+    --ink: #5A3A12; --ink-soft: #8A6A3A;
+    --brand: #FF9418; --brand-ink: #FFFFFF;
+    --line: rgba(150, 100, 30, .22);
+    --bottle: #FFF6E4; --bottle-line: #C7541A; --cork: #C08447; --cork-line: #8E5A28;
+    --shadow: 0 18px 40px rgba(150, 90, 10, .18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-1: #0E2745; --bg-2: #061223;
+      --ink: #E8F1FF; --ink-soft: #9FBBDE;
+      --brand: #FFB54A; --brand-ink: #24160A;
+      --line: rgba(150, 190, 240, .22);
+      --bottle: #E9F1FB; --bottle-line: #7FA6CF; --cork: #A9825A; --cork-line: #6E5138;
+      --shadow: 0 18px 44px rgba(0, 0, 0, .46);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    min-height: 100vh; min-height: 100dvh; margin: 0;
+    display: grid; place-items: center; padding: 28px;
+    font: 16px/1.7 "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB",
+          system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: linear-gradient(170deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    background-attachment: fixed;
+  }
+  main { width: min(560px, 100%); text-align: center; }
+  .bottle { width: 92px; height: 92px; margin: 0 auto 6px; display: block;
+            filter: drop-shadow(var(--shadow)); animation: bob 5.5s ease-in-out infinite; }
+  @keyframes bob { 0%, 100% { transform: translateY(-5px) rotate(-2.5deg); }
+                   50%      { transform: translateY(5px)  rotate(2.5deg); } }
+  @media (prefers-reduced-motion: reduce) { .bottle { animation-duration: 12s; } }
+  .code { margin: 0; font-size: clamp(52px, 15vmin, 86px); font-weight: 800;
+          letter-spacing: .06em; line-height: 1; color: var(--brand);
+          opacity: .92; }
+  h1 { margin: 10px 0 6px; font-size: clamp(20px, 5vmin, 26px); font-weight: 700; }
+  .lead { margin: 0 0 26px; color: var(--ink-soft); font-size: 15px; }
+  .btn { display: inline-block; padding: 12px 26px; border-radius: 999px;
+         background: var(--brand); color: var(--brand-ink); text-decoration: none;
+         font-weight: 700; box-shadow: var(--shadow);
+         transition: transform .18s ease, filter .18s ease; }
+  .btn:hover, .btn:focus-visible { transform: translateY(-2px); filter: brightness(1.06); }
+  nav { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(--line);
+        display: flex; flex-wrap: wrap; gap: 10px 22px; justify-content: center;
+        font-size: 14px; }
+  nav a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px solid transparent; }
+  nav a:hover, nav a:focus-visible { color: var(--ink); border-bottom-color: var(--brand); }
+</style>
+</head>
+<body>
+<main>
+  <svg class="bottle" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+    <path d="M26 20h12v9.5c0 3.2 1.6 4.6 3.4 6.6 2.1 2.4 3.6 4.4 3.6 8V54c0 2.6-2.1 4.6-4.7 4.6H23.7C21.1 58.6 19 56.6 19 54V44.1c0-3.6 1.5-5.6 3.6-8 1.8-2 3.4-3.4 3.4-6.6V20Z"
+          fill="var(--bottle)" stroke="var(--bottle-line)" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M24.5 19.5h15" stroke="var(--bottle-line)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M26.5 19.5V13c0-1.1.9-2 2-2h7c1.1 0 2 .9 2 2v6.5Z"
+          fill="var(--cork)" stroke="var(--cork-line)" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M24 30v20" stroke="var(--bottle)" stroke-width="3.4" stroke-linecap="round" opacity=".75"/>
+    <path d="M26.5 40.5q2.8 -4 5.6 0" fill="none" stroke="var(--bottle-line)" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M34.5 40.5q2.8 -4 5.6 0" fill="none" stroke="var(--bottle-line)" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M28 48.5q4.5 4 9 0" fill="none" stroke="var(--bottle-line)" stroke-width="2.8" stroke-linecap="round"/>
+  </svg>
+
+  <p class="code">404</p>
+  <h1>这只瓶子漂丢了</h1>
+  <p class="lead">你要找的地址不在这片海上。<br>也许是被浪推去了别处。</p>
+
+  <a class="btn" href="/">回到首页 →</a>
+
+  <nav>
+    <a href="https://www.blog.foryouos.cn/">博客</a>
+    <a href="https://analyse.foryouos.cn/">投资分析</a>
+    <a href="https://www.so.foryouos.cn/">搜索</a>
+    <a href="https://github.com/foryouos">GitHub</a>
+  </nav>
+</main>
+</body>
+</html>
